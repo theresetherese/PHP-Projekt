@@ -1,13 +1,13 @@
 <?php
-	require_once 'DB_settings.php';
-	require_once 'LoginDAL.php';
-	require_once 'User.php';
-	require_once 'LoginHandler.php';
-	require_once 'LoginController.php';
-	require_once 'LoginView.php';
-	require_once 'RegisterView.php';
-	require_once 'RegisterController.php';
-	require_once 'RegisterHandler.php';
+	require_once '../Model/DAL/DB_settings.php';
+	require_once '../Model/DAL/LoginDAL.php';
+	require_once '../Model/User.php';
+	require_once '../Model/LoginHandler.php';
+	require_once '../Controller/LoginController.php';
+	require_once '../View/LoginView.php';
+	require_once '../View/RegisterView.php';
+	require_once '../Controller/RegisterController.php';
+	require_once '../Model/RegisterHandler.php';
 	
 	session_start();
 	

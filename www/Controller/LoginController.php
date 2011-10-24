@@ -7,9 +7,9 @@
  * 
  */
 
-	require_once("LoginHandler.php");
-	require_once("User.php");
-	require_once("LoginView.php");
+	require_once "../Model/LoginHandler.php";
+	require_once "../Model/User.php";
+	require_once "../View/LoginView.php";
 	
 	class LoginController {
 		

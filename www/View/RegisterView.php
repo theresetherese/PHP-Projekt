@@ -5,8 +5,8 @@
  * 
  */
 
-	require_once 'User.php';
-	require_once 'Constants.php';
+	require_once '../Model/User.php';
+	require_once '../Model/Constants.php';
 
 	class RegisterView{
 		

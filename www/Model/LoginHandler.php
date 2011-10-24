@@ -1,6 +1,6 @@
 <?php
 	
-	require_once 'LoginDAL.php';
+	require_once 'DAL/LoginDAL.php';
 	require_once 'Constants.php';
 	
 	/*

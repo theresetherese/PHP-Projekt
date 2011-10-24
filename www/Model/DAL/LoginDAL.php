@@ -1,6 +1,6 @@
 <?php
 
-	require_once("DB_settings.php");
+	require_once "DB_settings.php";
 
 	class LoginDAL {
 		

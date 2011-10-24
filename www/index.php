@@ -1,6 +1,6 @@
 <?php
 
-	require_once("MasterController.php");
+	require_once "Controller/MasterController.php";
 	
 	//Start session
 	session_start();
