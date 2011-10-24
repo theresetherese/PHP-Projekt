@@ -9,6 +9,7 @@
 		private $password = "";
 		private $cookieData = "";
 		private $ip = "";
+		private $dishes = array();
 		
 		
 		public function GetUsername(){
@@ -112,4 +113,7 @@
 			$this->ip = $_ip;
 		}
 		
+		public function GetDishes(){
+			return $this->dishes;
+		}
 	}

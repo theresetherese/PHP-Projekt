@@ -7,7 +7,7 @@
 	
 	require_once 'LoginController.php';
 	require_once 'RegisterController.php';
-	require_once '../Model/Constants.php';
+	require_once './Model/Constants.php';
 	
 	class MasterController {
 		

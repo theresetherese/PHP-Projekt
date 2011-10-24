@@ -37,14 +37,15 @@
 		
 		const LoggedInSessionKey = "loggedIn";
 		const LoggedInSessionValue = "loggedIn";
+		
+		const LoggedInUserSessionKey = "user";
 		  
 		/*
 		 * COOKIES
 		 */
 		
 		//Keep me logged in cookies
-		const KeepLoggedInCookieToken = "fu_token";
-		const KeepLoggedInCookieUserName = "fu_un";
-		const KeepLoggedInCookieIP = "fu_ip";
+		const KeepLoggedInCookieToken = "vsjai_token";
+		const KeepLoggedInCookieUserName = "vsjai_un";
 		const CookieTime = 604800;	
 	}

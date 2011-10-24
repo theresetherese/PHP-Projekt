@@ -29,7 +29,10 @@
 				
 				//If username exists, and the password matches it, set loggedIn to true
 				if($loginDAL->ComparePassword($user) == true){
+					$username = $user->GetUsername();
+					session_regenerate_id();
 					$_SESSION[Constants::LoggedInSessionKey] = Constants::LoggedInSessionValue;
+					$_SESSION[Constants::LoggedInUserSessionKey] = $username;
 					return true;
 				}
 				
@@ -64,6 +67,7 @@
 		//Log out user
 		public function DoLogout(){
 			unset($_SESSION[Constants::LoggedInSessionKey]);
+			unset($_SESSION[Constants::LoggedInUserSessionKey]);
 		}
 		
 		//Return true if user is logged in

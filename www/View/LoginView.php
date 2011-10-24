@@ -5,8 +5,8 @@
  * 
  */
 
-	require_once '../Model/User.php';
-	require_once '../Model/Constants.php';
+	require_once './Model/User.php';
+	require_once './Model/Constants.php';
 
 	class LoginView{
 		
@@ -58,7 +58,7 @@
 		
 		//Return text for already logged in user
 		public function DoLoggedInText(){
-			return "<h1>You are logged in</h1>";
+			return "<h1>Hello" . $_SESSION[Constants::LoggedInUserSessionKey] . "</h1>";
 		}
 		
 		//Return logout form
@@ -153,7 +153,7 @@
 			return false;
 		}
 		
-		//Save cookie
+		//Save cookies
 		public function KeepUserLoggedIn(User $user){
 			//Create cookiedata
 			$cookieData = $this->GetUserName() . time();
