@@ -15,7 +15,7 @@
 		
 		
 		/*
-		 * Check if GET isset set with right value and key, and call RegisterController. Else, call LoginController.
+		 * Check GET value and present the right views.
 		 * 
 		 */
 		public function DoControll(){
