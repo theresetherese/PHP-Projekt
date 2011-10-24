@@ -5,6 +5,7 @@
 	class User {
 		
 		private $username = "";
+		private $email = "";
 		private $password = "";
 		private $cookieData = "";
 		private $ip = "";
@@ -42,6 +43,26 @@
 			}
 		}
 		
+		public function GetEmail(){
+			return $this->email;
+		}
+		
+		public function SetEmail($_email){
+			$this->email = $_email;
+		}
+		
+		public function ValidateEmail($_email){
+			$validator = new Validator();
+			
+			//String to lowercase
+			$_email = strtolower($_email);
+			
+			if($validator->validEmail($_email) == true){
+				return true;
+			}
+			
+			return false;
+		}
 		
 		public function GetPassword(){
 			return $this->password;

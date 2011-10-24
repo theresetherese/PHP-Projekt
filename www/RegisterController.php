@@ -57,6 +57,7 @@
 					else{
 						$xhtml = $registerView->DoInvalidSubmission();
 						$xhtml .= $registerView->DoInvalidUsername();
+						$xhtml .= $registerView->DoInvalidEmail();
 						$xhtml .= $registerView->DoInvalidPassword();
 						$xhtml .= $registerView->DoRegisterBox();
 					}

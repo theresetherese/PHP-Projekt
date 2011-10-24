@@ -156,10 +156,11 @@
 			
 			$username = $user->GetUsername();
 			$password = $user->GetPassword();
+			$email = $user->GetEmail();
 			$ip = $user->GetIP();
 			
-			if($stmt = $this->myConnection->prepare("INSERT INTO User VALUES('',?,?,'',?)")){
-				$stmt->bind_param("sss", $username, $password, $ip);
+			if($stmt = $this->myConnection->prepare("INSERT INTO User VALUES('',?,?,?,'',?)")){
+				$stmt->bind_param("ssss", $username, $password, $email, $ip);
 				$stmt->execute();
 				$stmt->close();
 				return true;

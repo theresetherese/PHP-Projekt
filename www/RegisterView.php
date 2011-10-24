@@ -19,8 +19,7 @@
 		
 		//Return welcome-text
 		public function DoRegisterText() {
-			return "<h1>Register user</h1>
-			<p>Enter a username and a password to register.</p>";
+			return "<h1>Register user</h1>";
 		}
 		
 		//Return registration form
@@ -30,6 +29,10 @@
 				<p>
 					<label for='username'>Username: </label>
 					<input type='text' id='username' name='username' />
+				</p>
+				<p>
+					<label for='username'>Email: </label>
+					<input type='text' id='email' name='email' />
 				</p>
 				<p>
 					<label for='password'>Password: </label>		
@@ -56,6 +59,11 @@
 		//Return text for invalid password
 		public function DoInvalidPassword(){
 			return "<p>The password must be between 6 and 30 characters long, and must contain an uppercase letter, a lowercase letter and a digit.</p>";
+		}
+		
+		//Return text for invalid password
+		public function DoInvalidEmail(){
+			return "<p>Enter a valid email address.</p>";
 		}
 		
 		//return text for invalid submission
@@ -90,6 +98,15 @@
 			//Return username if submitted
 			if (isset($_POST["username"]) == true && empty($_POST["username"]) == false){
 				return $_POST["username"];
+			}
+	    	return false;
+		}
+		
+		//Get email from form, return @string
+		public function GetEmail(){
+			//Return emial if submitted
+			if (isset($_POST["email"]) == true && empty($_POST["email"]) == false){
+				return $_POST["email"];
 			}
 	    	return false;
 		}
@@ -131,19 +148,23 @@
 		public function GetUser(){
 	
 			//Check if post values are OK	
-			if ($this->GetUserName() != false && $this->ComparePasswords() != false){
+			if ($this->GetUserName() != false && $this->GetEmail() != false && $this->ComparePasswords() != false){
 					
 				$username = $this->GetUserName();
+				$email = $this->GetEmail();
 				$password = $this->GetPassword();	
 				
 				//Create User object	
 				$user = new User();
 				
 				//Validate username and password
-				if($user->ValidateUsername($username) == true && $user->ValidatePassword($password) == true){
+				if($user->ValidateUsername($username) == true && $user->ValidatePassword($password) == true && $user->ValidateEmail($email) == true){
 					
 					//Set username
 					$user->SetUsername($username);
+					
+					//Set email
+					$user->SetEmail($email);
 										
 					//Salt and hash password, SetPassword
 					$user->SetPassword($user->HashPassword($password));
