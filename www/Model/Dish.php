@@ -24,15 +24,23 @@
 		}
 		
 		public function SetDishName($_dishName){
-			//TODO Implement validation
 			$this->dishName = $_dishName;
+		}
+		
+		public function ValidateDishName($_dishName){
+			$validator = new Validator();
+			if ($validator->validLettersAndDigits($_dishName)){
+				
+				return true;
+			}
+			return false;
 		}
 		
 		public function GetCreationDate(){
 			return $this->creationDate;
 		}
 		
-		public function SetCreationDate($_creationDate){
+		public function SetCreationDate(Date $_creationDate){
 			$this->creationDate = $_creationDate;
 		}
 		
@@ -41,7 +49,8 @@
 		}
 		
 		public function SetDishInfo($_dishInfo){
-			//TODO convert characters to &
+			$validator = new Validator();
+			$dishInfo = $validator->convertToEntities($_dishInfo);
 			$this->dishInfo = $_dishInfo;
 		}
 		
@@ -50,8 +59,15 @@
 		}
 		
 		public function SetUrl($_url){
-			//TODO Implement validation
 			$this->url = $_url;
+		}
+		
+		public function ValidateUrl($_url){
+			$validator = new Validator();
+			if ($validator->validUrl($_url) == true){
+				return true;
+			}
+			return false;
 		}
 		
 		public function GetThumbnailUrl(){
@@ -59,7 +75,14 @@
 		}
 		
 		public function SetThumbnailUrl($_thumbnail){
-			//TODO Implement validation
 			$this->thumbnailUrl = $_thumbnailUrl;
+		}
+		
+		public function ValidateThumbnailUrl($_thumbnail){
+			$validator = new Validator();
+			if ($validator->validUrl($_url) == true){
+				return true;
+			}
+			return false;
 		}
 	}
