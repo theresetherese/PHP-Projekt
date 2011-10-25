@@ -1,29 +1,33 @@
 <?php
 	
 	require_once 'DB_settings.php';
+	require_once './Dish.php';
 	
 	class DishDAL{
 		
-		//Get user and all dishes
+		//Get all dishes from user
 		public function GetDishes(User $user){
 			//Save username	
 			$userId = $user->GetUserId();
-			$usernameResult = "";
+			$dishId = 0;
+			$dishName = "";
+			$creationDate = "";
+			$dishInfo = "";
+			$url = "";
 			
 			//SQL
-			if ($stmt = $this->myConnection->prepare("SELECT username FROM User WHERE username = ?")){
-				$stmt->bind_param("s", $username);
+			if ($stmt = $this->myConnection->prepare("SELECT id, dishName, creationDate, dishInfo, url FROM Dish WHERE userId = ?")){
+				$stmt->bind_param("i", $userId);
 				$stmt->execute();
-				$stmt->bind_result($usernameResult);
-				$stmt->fetch();
-				
-				//Return true if username exists
-				if ($usernameResult == $username){
-					return true;
-				}
-				//Else return false
-				else{
-					return false;
+				$stmt->bind_result($dishId, $dishName, $creationDate, $dishInfo, $url);
+				while($stmt->fetch()){
+					$dish = new Dish();
+					$dish->SetId($dishId);
+					$dish->SetDishName($dishName);
+					$dish->SetCreationDate($creationDate);
+					$dish->SetDishInfo($dishInfo);
+					$dish->SetUrl($url);
+					$user->PushDish($dish);
 				}
 				
 				//Close
@@ -34,6 +38,8 @@
 				throw new Exception("Database Error.", 1);
 					
 			}
+			
+			return $user;
 			
 			//Close
 			$this->myConnection->close();

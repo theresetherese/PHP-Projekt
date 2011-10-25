@@ -124,4 +124,8 @@
 		public function GetDishes(){
 			return $this->dishes;
 		}
+		
+		public function PushDishes(Dish $dish){
+			array_push($this->dishes, $dish);
+		}
 	}

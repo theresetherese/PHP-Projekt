@@ -29,9 +29,13 @@
 		
 		public function ValidateDishName($_dishName){
 			$validator = new Validator();
-			if ($validator->validLettersAndDigits($_dishName)){
-				
-				return true;
+			
+			if(strlen($_dishName) <= 50 && strlen($_dishName) >= 3){
+				if ($validator->validLettersAndDigits($_dishName)){
+					
+					return true;
+				}
+				return false;
 			}
 			return false;
 		}
@@ -40,7 +44,7 @@
 			return $this->creationDate;
 		}
 		
-		public function SetCreationDate(Date $_creationDate){
+		public function SetCreationDate(DateTime $_creationDate){
 			$this->creationDate = $_creationDate;
 		}
 		
@@ -49,9 +53,7 @@
 		}
 		
 		public function SetDishInfo($_dishInfo){
-			$validator = new Validator();
-			$dishInfo = $validator->convertToEntities($_dishInfo);
-			$this->dishInfo = $_dishInfo;
+			$this->dishInfo = htmlspecialchars($_dishInfo);
 		}
 		
 		public function GetUrl(){
