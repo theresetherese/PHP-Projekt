@@ -1,7 +1,7 @@
 <?php
 	
 	require_once 'DB_settings.php';
-	require_once './Dish.php';
+	//require_once '../Dish.php';
 	
 	class DishDAL{
 		
@@ -46,6 +46,36 @@
 		}
 		
 		//Get a specific dish
+		public function GetDish(Dish $dish){
+			$dishId = $dish->GetId();
+			
+			//SQL
+			if ($stmt = $this->myConnection->prepare("SELECT dishName, creationDate, dishInfo, url FROM Dish WHERE id = ?")){
+				$stmt->bind_param("i", $dishId);
+				$stmt->execute();
+				$stmt->bind_result($dishName, $creationDate, $dishInfo, $url);
+				while($stmt->fetch()){
+					$dish->SetDishName($dishName);
+					$dish->SetCreationDate($creationDate);
+					$dish->SetDishInfo($dishInfo);
+					$dish->SetUrl($url);
+				}
+				
+				//Close
+				$stmt->close();
+				
+			}
+			else{
+				throw new Exception("Database Error.", 1);
+					
+			}
+			
+			return $dish;
+			
+			//Close
+			$this->myConnection->close();
+		}
+		
 		
 		//Add a dish
 		

@@ -44,7 +44,7 @@
 			return $this->creationDate;
 		}
 		
-		public function SetCreationDate(DateTime $_creationDate){
+		public function SetCreationDate($_creationDate){
 			$this->creationDate = $_creationDate;
 		}
 		

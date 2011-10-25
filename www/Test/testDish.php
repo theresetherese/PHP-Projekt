@@ -1,7 +1,9 @@
 <?php
 
-	require_once './Model/Dish.php';
-	require_once './Model/DAL/DishDAL.php';
+	require_once '../Model/DAL/DishDAL.php';
+	require_once '../Model/Dish.php';
+	require_once '../Model/User.php';
+
 
 	class TestDish{
 		
@@ -52,13 +54,31 @@
 			
 		}
 		
+		
 		public function TestDishDAL(){
 			$dishDAL = new DishDAL();
 			
 			$user = new User();
 			$user->SetUserId(2);
 			
-			var_dump($dishDAL->GetDishes($user));
+			$user = $dishDAL->GetDishes($user);
+			
+			if(count($user->GetDishes()) == 0){
+				echo "User has no dishes<br />";
+				return false;
+			}
+			
+			$dish = new Dish();
+			$dish->SetId(3);
+			
+			$dish = $dishDAL->GetDish($dish);
+			
+			if($dish->GetDishName() != "Chili con carne"){
+				echo "GetDishName() could not return Chili con carne";
+				return false;
+			}
+			
+			return true;
 		}
 		
 		public function TestDishHandler(){
@@ -78,6 +98,7 @@
 			else {
 				echo "Dish.php FAILED<br />";
 			}
+			
 			
 			echo "<h1>DishDAL.php</h1>";
 			if($this->TestDishDAL() == true){

@@ -125,7 +125,7 @@
 			return $this->dishes;
 		}
 		
-		public function PushDishes(Dish $dish){
+		public function PushDish(Dish $dish){
 			array_push($this->dishes, $dish);
 		}
 	}
