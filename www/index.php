@@ -5,11 +5,10 @@
 	//Start session
 	session_start();
 	
-	//Initiate $title och $body
-	$title = "Login";
+	//Initiate $body
 	$body = "";
 	
-	//Check which information to show
+	//Collect body content from MasterController
 	$masterController = new MasterController();
 	$mcDoControll = $masterController->DoControll();
 	
@@ -21,7 +20,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 	<head>
     	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    	<title><?php echo $title; ?></title>
+    	<title>Vad ska jag äta idag?</title>
 	</head>
 
 	<body>

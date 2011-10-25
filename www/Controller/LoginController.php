@@ -10,6 +10,7 @@
 	require_once "./Model/LoginHandler.php";
 	require_once "./Model/User.php";
 	require_once "./View/LoginView.php";
+	require_once './Controller/LoggedInController.php';
 	
 	class LoginController {
 		
@@ -68,7 +69,7 @@
 			$loginHandler = new LoginHandler();
 			
 			//Text + loginbox
-			$xhtml = $loginView->DoLoginText();
+			$xhtml = $loginView->DoWelcomeText();
 			$xhtml .= $loginView->DoLoginBox();
 			$xhtml .= $loginView->DoRegisterLink();
 			
@@ -117,8 +118,10 @@
 			$loginView = new LoginView();
 			$loginHandler = new LoginHandler();
 			
-			//Text + logoutbox
-			$xhtml = $loginView->DoLoggedInText();
+			$loggedInController = new LoggedInController();
+			$xhtml = $loggedInController->DoControll();
+			
+			//Logout-box
 			$xhtml .= $loginView->DoLogoutBox();
 			
 			//Check if user tries to log out

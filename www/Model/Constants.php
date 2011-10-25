@@ -13,6 +13,10 @@
 		 */
 		const RegisterGetKey = "register";
 		const RegisterGetValue = "register";
+		const UserViewGetKey = "user";
+		const DishViewGetKey = "dish";
+		const DishViewAllGetValue = "all";
+		const DishViewAddGetValue = "add";
 		
 		/*
 		 * POST keys and values
@@ -22,13 +26,13 @@
 		const KeepMeLoggedInPostValue = "keepLoggedIn";
 		
 		const LoginPostKey = "login";
-		const LoginPostValue = "Login";
+		const LoginPostValue = "Logga in";
 		
 		const LogoutPostKey = "logout";
-		const LogoutPostValue = "Logout";
+		const LogoutPostValue = "Logga ut";
 		
 		const RegisterPostKey = "regiserUser";
-		const RegisterPostValue = "Register";
+		const RegisterPostValue = "Registrera";
 		
 		/*
 		 * SESSIONS

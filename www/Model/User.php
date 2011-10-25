@@ -4,6 +4,7 @@
 
 	class User {
 		
+		private $userId = "";
 		private $username = "";
 		private $email = "";
 		private $password = "";
@@ -11,6 +12,13 @@
 		private $ip = "";
 		private $dishes = array();
 		
+		public function GetUserId(){
+			return $this->userId;
+		}
+		
+		public function SetUserId($_userId){
+			$this->userId = $_userId;
+		}
 		
 		public function GetUsername(){
 			return $this->username;

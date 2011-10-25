@@ -1,7 +1,10 @@
 <?php 
 
 /* 
- * Generates texts for different states, and collects data from forms
+ * Generates login- and logoutform
+ * Generates error messages for wrong username or password
+ * Collects form input and validates it
+ * Checks if user has cookies
  * 
  */
 
@@ -18,28 +21,33 @@
 		 */
 		
 		//Return welcome-text
-		public function DoLoginText() {
-			return "<h1>Welcome!</h1>
-			<p>Log in with your username and password.</p>";
+		public function DoWelcomeText() {
+			return "<h1>Vad ska jag äta idag?</h1>
+			<p>Svårt att bestämma vad du ska äta? Registrera dig för att spara maträtter du gillar, och slumpa fram dem när fantasin tagit slut!</p>";
 		}
 		
 		//Return login form
 		public function DoLoginBox(){
 			//Start login form	
 			$form = "<form method='post'>
-				<p>
-					<label for='username'>Username: </label>
-					<input type='text' id='username' name='username' />
-				</p>
-				<p>
-					<label for='password'>Password: </label>		
-					<input type='password' id='password' name='password' />
-				</p>
-				<p>
-					<input type='submit' id='loginButton' name='" . Constants::LoginPostKey . "' value='" . Constants::LoginPostValue . "' />
-					<label for='keepLoggedIn'>Keep me logged in</label>
-					<input type='checkbox' id='" . Constants::KeepMeLoggedInPostKey . "' name='" . Constants::KeepMeLoggedInPostKey . "' value='" . Constants::KeepMeLoggedInPostValue . "' />
-				</p>
+				<fieldset>
+					<legend>Logga in</legend>
+					<p>
+						<label for='username'>Användarnamn: </label>
+						<input type='text' id='username' name='username' />
+					</p>
+					<p>
+						<label for='password'>Lösenord: </label>		
+						<input type='password' id='password' name='password' />
+					</p>
+					<p>
+						<label for='keepLoggedIn'>Kom ihåg mig</label>
+						<input type='checkbox' id='" . Constants::KeepMeLoggedInPostKey . "' name='" . Constants::KeepMeLoggedInPostKey . "' value='" . Constants::KeepMeLoggedInPostValue . "' />
+					</p>
+					<p>
+						<input type='submit' id='loginButton' name='" . Constants::LoginPostKey . "' value='" . Constants::LoginPostValue . "' />
+					</p>
+				</fieldset>
 			</form>";
 			
 			//Return form
@@ -48,22 +56,17 @@
 		
 		//Return text for wrong user credentials
 		public function DoWrongCredentialsText(){
-			return "<h1>Wrong username or password. Please try again.</h1>";
-		}
-		
-		//Return text for successful login
-		public function DoLogInSuccessText(){
-			return "<h1>You are successfully logged in!</h1>";
+			return "<h1>Fel användarnamn eller lösenord.</h1>";
 		}
 		
 		//Return text for already logged in user
 		public function DoLoggedInText(){
-			return "<h1>Hello" . $_SESSION[Constants::LoggedInUserSessionKey] . "</h1>";
+			return "<h1>Hello " . $_SESSION[Constants::LoggedInUserSessionKey] . "</h1>";
 		}
 		
 		//Return logout form
 		public function DoLogoutBox(){
-			return "<form method='post'>
+			return "<form method='post' action='index.php'>
 				<p>
 					<input type='submit' id='" . Constants::LogoutPostKey . "' name='" . Constants::LogoutPostKey . "' value='" . Constants::LogoutPostValue . "' />
 				</p>
@@ -72,13 +75,12 @@
 		
 		//Return text for logged out user
 		public function DoLoggedOutText(){
-			return "<h1>You are now logged out!</h1>
-			<p>Please come back soon!</p>";
+			return "<h1>Du är utloggad!</h1>";
 		}
 		
 		//Return link to registration
 		public function DoRegisterLink(){
-			return '<a href="index.php?' . Constants::RegisterGetKey . '=' . Constants::RegisterGetValue . '">Register user</a>';
+			return '<a href="index.php?' . Constants::RegisterGetKey . '=' . Constants::RegisterGetValue . '">Registrera dig</a>';
 		}
 
 		
@@ -170,14 +172,23 @@
 			return $user;
 		}
 		
-		//If client has cookies, save them to user with ip and return user object
+		//If client has cookies, validate and save them to user object with ip and return user object
 		public function HasCookies(){
 			if (isset($_COOKIE[Constants::KeepLoggedInCookieUserName]) && isset($_COOKIE[Constants::KeepLoggedInCookieToken])){
 				$user = new User();
-				$user->SetUsername($_COOKIE[Constants::KeepLoggedInCookieUserName]);
-				$user->SetCookieData($_COOKIE[Constants::KeepLoggedInCookieToken]);
-				$user->SetIP($this->GetIP());
-				return $user;
+				$username = $_COOKIE[Constants::KeepLoggedInCookieUserName];
+				$cookieData = $_COOKIE[Constants::KeepLoggedInCookieToken];
+				
+				//Save cookieinfo to user object if username validates
+				if($user->ValidateUsername($username)){
+					$user->SetUsername($username);
+					$user->SetCookieData($cookieData);
+					$user->SetIP($this->GetIP());
+					
+					return $user;
+				}
+				
+				return false;
 			}
 			
 			return false;
