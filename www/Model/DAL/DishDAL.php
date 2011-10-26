@@ -33,22 +33,19 @@
 				//Close
 				$stmt->close();
 				
+				return $user;
+				
 			}
 			else{
 				throw new Exception("Database Error.", 1);
 					
 			}
 			
-			return $user;
-			
-			//Close
-			$this->myConnection->close();
 		}
 		
 		//Get a specific dish
 		public function GetDish(Dish $dish){
 			$dishId = $dish->GetId();
-			
 			//SQL
 			if ($stmt = $this->myConnection->prepare("SELECT dishName, creationDate, dishInfo, url FROM Dish WHERE id = ?")){
 				$stmt->bind_param("i", $dishId);
@@ -63,23 +60,71 @@
 				
 				//Close
 				$stmt->close();
-				
+				return $dish;
 			}
 			else{
 				throw new Exception("Database Error.", 1);
 					
 			}
-			
-			return $dish;
-			
-			//Close
-			$this->myConnection->close();
 		}
 		
 		
 		//Add a dish
+		public function AddDish(Dish $dish, User $user){
+			$userId = $user->GetUserId();	
+			$dishName = $dish->GetDishName();
+			$dishInfo = $dish->GetDishInfo();
+			$url = $dish->GetUrl();
+			$rowsAffected = 0;
+			
+			//SQL
+			if ($stmt = $this->myConnection->prepare("INSERT INTO Dish VALUES('',?,?,CURRENT_TIMESTAMP,?,?,'')")){
+				$stmt->bind_param("isss", $userId, $dishName, $dishInfo, $url);
+				$stmt->execute();
+				$rowsAffected = $stmt->affected_rows;
+				$dish->SetId($stmt->insert_id);
+				//Close
+				$stmt->close();	
+				
+				if($rowsAffected > 0){
+					return $dish;
+				}
+				else{
+					return false;
+				}
+							
+			}
+			else{
+				throw new Exception("Database Error.", 1);		
+			}
+			
+		}
 		
 		//Delete a dish
+		public function DeleteDish(Dish $dish){
+			$dishId = $dish->GetId();
+			$rowsAffected = 0;
+			
+			if($stmt = $this->myConnection->prepare("DELETE FROM Dish WHERE id = ?")){
+				$stmt->bind_param("i", $dishId);
+				$stmt->execute();
+				
+				$rowsAffected = $stmt->affected_rows;
+				
+				$stmt->close();
+				
+				if($rowsAffected > 0){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else{
+				throw new Exception("Database Error.", 1);
+					
+			}
+		}
 				
 		//Create a new mysqli connection
 		public function __construct() {
@@ -92,6 +137,10 @@
 				printf("Connect failed: %s\n", mysqli_connect_error());
 				exit();
 			}
+		}
+		
+		public function __destruct(){
+			$this->myConnection->close();
 		}
 		
 	}

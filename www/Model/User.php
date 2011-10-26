@@ -4,7 +4,7 @@
 
 	class User {
 		
-		private $userId = "";
+		private $userId = NULL;
 		private $username = "";
 		private $email = "";
 		private $password = "";

@@ -78,6 +78,29 @@
 				return false;
 			}
 			
+			$addDish = new Dish();
+			$addDish->SetDishName("Tacos");
+			$addDish->SetDishInfo("Taco, taco so goood, in my tummy yummy yummy gimme more");
+			$addDish->SetUrl("http://tacoisgood.com");
+			
+			$addDish = $dishDAL->AddDish($addDish, $user);
+			
+			if($addDish == false){
+				echo "Dish was NOT added.<br />";
+				return false;
+			}
+			else{
+				echo "Dish was added.<br />";
+			}
+			
+			if($dishDAL->DeleteDish($addDish) == true){
+				echo "Dish was deleted.<br />";
+			}
+			else{
+				echo "Dish was not deleted.<br />";
+				return false;
+			}
+			
 			return true;
 		}
 		

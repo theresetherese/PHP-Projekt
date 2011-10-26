@@ -4,7 +4,7 @@
 	
 	class Dish{
 		
-		private $id = "";
+		private $id = 0;
 		private $dishName = "";
 		private $creationDate = "";
 		private $dishInfo = "";
