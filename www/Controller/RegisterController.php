@@ -1,9 +1,4 @@
 <?php
-
-	require_once './View/RegisterView.php';
-	require_once './Model/RegisterHandler.php';
-	require_once './Model/LoginHandler.php';
-	require_once './View/LoginView.php';
 	
 	/*
 	 * Is user is logged out, present Register form.

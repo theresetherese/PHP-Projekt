@@ -1,8 +1,5 @@
 <?php
 	
-	require_once 'DAL/LoginDAL.php';
-	require_once 'Constants.php';
-	
 	/*
 	 * 
 	 * Checks if the username and password combination is correct and sets session loggedIn to true or false.
@@ -25,7 +22,7 @@
 			$loginDAL = new LoginDAL();
 			
 			//Check if username exists	
-			if($loginDAL->CheckUsernameExists($user) == true){
+			if($loginDAL->GetUserByName($user) != false){
 				
 				//If username exists, and the password matches it, set loggedIn to true
 				if($loginDAL->ComparePassword($user) == true){
@@ -48,11 +45,14 @@
 			$loginDAL = new LoginDAL();
 			
 			//Check if username exists	
-			if($loginDAL->CheckUsernameExists($user) == true){
+			if($loginDAL->GetUserByName($user) != false){
 				
 				//If username exists, and the cookies matches set session to logged in
 				if($loginDAL->CompareCookie($user) == true){
+					$username = $user->GetUsername();
+					session_regenerate_id();
 					$_SESSION[Constants::LoggedInSessionKey] = Constants::LoggedInSessionValue;
+					$_SESSION[Constants::LoggedInUserSessionKey] = $username;
 					return true;
 				}
 				

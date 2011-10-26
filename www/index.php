@@ -1,6 +1,26 @@
 <?php
 
-	require_once "Controller/MasterController.php";
+	require_once 'Controller/LoggedInController.php';
+	require_once 'Controller/LoginController.php';
+	require_once 'Controller/MasterController.php';
+	require_once 'Controller/RegisterController.php';
+	
+	require_once 'Model/DAL/DB_settings.php';
+	require_once 'Model/DAL/DishDAL.php';
+	require_once 'Model/DAL/LoginDAL.php';
+	require_once 'Model/Constants.php';
+	require_once 'Model/Dish.php';
+	require_once 'Model/DishHandler.php';
+	require_once 'Model/LoginHandler.php';
+	require_once 'Model/RegisterHandler.php';
+	require_once 'Model/User.php';
+	require_once 'Model/Validator.php';
+	
+	require_once 'View/LoggedInView.php';
+	require_once 'View/LoginView.php';
+	require_once 'View/RegisterView.php';
+	
+	
 	
 	//Start session
 	session_start();

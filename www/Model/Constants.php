@@ -2,6 +2,9 @@
 	
 	class Constants {
 		
+		//Directory URL
+		const Server = "http://localhost:8888/PHP/Projekt/www/";
+		
 		//Salt
 		const Salt = "dauyetr34678t58364bcf7392847/&%(V&%B&B876B58765BV765V76V5/I%&(/&V%76V%(&%V/8";
 		

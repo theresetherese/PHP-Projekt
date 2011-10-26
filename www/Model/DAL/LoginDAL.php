@@ -17,25 +17,61 @@
 		 *  
 		 */
 		
-		public function CheckUsernameExists (User $user){
+		public function GetUserByName (User $user){
 			//Save username	
 			$username = $user->GetUsername();
-			$usernameResult = "";
+			$affectedRows = 0;
 			
 			//SQL
-			if ($stmt = $this->myConnection->prepare("SELECT username FROM User WHERE username = ?")){
+			if ($stmt = $this->myConnection->prepare("SELECT id, email FROM User WHERE username = ?")){
 				$stmt->bind_param("s", $username);
 				$stmt->execute();
-				$stmt->bind_result($usernameResult);
-				$stmt->fetch();
-				
-				//Return true if username exists
-				if ($usernameResult == $username){
-					return true;
+				$stmt->store_result();
+				$affectedRows = $stmt->num_rows;
+					
+				if($affectedRows > 0){
+					$stmt->bind_result($id, $email);
+					$user->SetUserId($id);
+					$user->SetEmail($email);
+					return $user;
 				}
-				//Else return false
 				else{
-					return false;
+					return false;	
+				}
+				
+				//Close
+				$stmt->close();
+				
+			}
+			else{
+				throw new Exception("Database Error.", 1);
+					
+			}
+			
+			//Close
+			$this->myConnection->close();
+		}
+		
+		public function GetUserByName (User $user){
+			//Save username	
+			$id= $user->GetUserId()();
+			$affectedRows = 0;
+			
+			//SQL
+			if ($stmt = $this->myConnection->prepare("SELECT username, email FROM User WHERE id = ?")){
+				$stmt->bind_param("i", $id);
+				$stmt->execute();
+				$stmt->store_result();
+				$affectedRows = $stmt->num_rows;
+					
+				if($affectedRows > 0){
+					$stmt->bind_result($id, $email);
+					$user->SetUserId($id);
+					$user->SetEmail($email);
+					return $user;
+				}
+				else{
+					return false;	
 				}
 				
 				//Close

@@ -1,8 +1,14 @@
 <?php
 
-	require_once '../Model/DAL/DishDAL.php';
-	require_once '../Model/Dish.php';
-	require_once '../Model/User.php';
+	require_once 'Model/DAL/DishDAL.php';
+	require_once 'Model/Dish.php';
+	require_once 'Model/User.php';
+	require_once 'Model/DishHandler.php';
+	//require_once 'Controller/DishController.php';
+	require_once 'Model/Constants.php';
+	//require_once 'View/DishView.php';
+	require_once 'Model/Validator.php';
+
 
 
 	class TestDish{
@@ -98,6 +104,11 @@
 			}
 			else{
 				echo "Dish was not deleted.<br />";
+				return false;
+			}
+			
+			if($dishDAL->DishNameExists($dish, $user) == false){
+				echo "DishNameExists returned false on existing dish<br />";
 				return false;
 			}
 			

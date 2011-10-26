@@ -4,8 +4,7 @@
 	 * Generates navigation for logged in users
 	 * 
 	 */
-	
-	require_once './Model/Constants.php';
+
 	
 	class LoggedInView{
 		

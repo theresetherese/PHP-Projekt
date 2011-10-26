@@ -5,8 +5,6 @@
  * 
  */
 
-	require_once './Model/User.php';
-	require_once './Model/Constants.php';
 
 	class RegisterView{
 		
@@ -83,7 +81,7 @@
 		
 		//Return link to login
 		public function DoLoginLink(){
-			return "<a href='index.php' title='Login'>Login</a>";
+			return "<a href='?' title='Logga in'>Logga in</a>";
 		}
 		
 		/*

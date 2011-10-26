@@ -8,8 +8,6 @@
  * 
  */
 
-	require_once './Model/User.php';
-	require_once './Model/Constants.php';
 
 	class LoginView{
 		
@@ -66,7 +64,7 @@
 		
 		//Return logout form
 		public function DoLogoutBox(){
-			return "<form method='post' action='index.php'>
+			return "<form method='post' action='?'>
 				<p>
 					<input type='submit' id='" . Constants::LogoutPostKey . "' name='" . Constants::LogoutPostKey . "' value='" . Constants::LogoutPostValue . "' />
 				</p>
@@ -80,7 +78,7 @@
 		
 		//Return link to registration
 		public function DoRegisterLink(){
-			return '<a href="index.php?' . Constants::RegisterGetKey . '=' . Constants::RegisterGetValue . '">Registrera dig</a>';
+			return '<a href="?' . Constants::RegisterGetKey . '=' . Constants::RegisterGetValue . '">Registrera dig</a>';
 		}
 
 		

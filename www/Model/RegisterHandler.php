@@ -1,13 +1,12 @@
 <?php
-	
-	require_once 'DAL/LoginDAL.php';
+
 	
 	class RegisterHandler{
 		
 		public function DoRegister(User $user){
 			$loginDAL = new LoginDAL();
 			
-			if($loginDAL->CheckUsernameExists($user) == true){
+			if($loginDAL->GetUserByName($user) != false){
 				return false;
 			}
 			else{
@@ -21,7 +20,7 @@
 		public function DoDelete (User $user){
 			$loginDAL = new LoginDAL();
 			
-			if($loginDAL->CheckUsernameExists($user) == true){
+			if($loginDAL->GetUserByName($user) != false){
 				if($loginDAL->DeleteUser($user) == true){
 					return true;
 				}

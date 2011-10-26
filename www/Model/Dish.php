@@ -1,7 +1,5 @@
 <?php
-	
-	require_once 'Validator.php';
-	
+		
 	class Dish{
 		
 		private $id = 0;

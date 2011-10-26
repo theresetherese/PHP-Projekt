@@ -1,7 +1,6 @@
 <?php
-	
-	require_once 'DB_settings.php';
-	//require_once '../Dish.php';
+
+	require_once "DB_settings.php";
 	
 	class DishDAL{
 		
@@ -43,7 +42,7 @@
 			
 		}
 		
-		//Get a specific dish
+		//Get a specific dish by id
 		public function GetDish(Dish $dish){
 			$dishId = $dish->GetId();
 			//SQL
@@ -61,6 +60,36 @@
 				//Close
 				$stmt->close();
 				return $dish;
+			}
+			else{
+				throw new Exception("Database Error.", 1);
+					
+			}
+		}
+		
+		//Check if dishname exists
+		public function DishNameExists(Dish $dish, User $user){
+			$dishName = $dish->GetDishName();
+			$userId = $user->GetUserId();
+			$affectedRows = 0;
+			
+			//SQL
+			if ($stmt = $this->myConnection->prepare("SELECT * FROM Dish WHERE dishName = ? AND userId = ?")){
+				$stmt->bind_param("si", $dishName, $userId);
+				$stmt->execute();
+				$stmt->store_result();
+				$affectedRows = $stmt->num_rows;			
+				
+				//Close
+				$stmt->close();
+				
+				if($affectedRows > 0){
+					return true;
+				}
+				else{
+					return false;	
+				}
+				
 			}
 			else{
 				throw new Exception("Database Error.", 1);

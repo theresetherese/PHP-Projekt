@@ -5,8 +5,6 @@
 	 *  
 	 */
 	
-	require_once './View/LoggedInView.php';
-	
 	class LoggedInController {
 		
 		public function DoControll(){
