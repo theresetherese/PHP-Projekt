@@ -1,58 +1,32 @@
 <?php
-	require_once '../Model/DAL/DB_settings.php';
-	require_once '../Model/DAL/LoginDAL.php';
-	require_once '../Model/User.php';
-	require_once '../Model/LoginHandler.php';
-	require_once '../Controller/LoginController.php';
-	require_once '../View/LoginView.php';
-	require_once '../View/RegisterView.php';
-	require_once '../Controller/RegisterController.php';
-	require_once '../Model/RegisterHandler.php';
+	require_once 'Controller/LoggedInController.php';
+	require_once 'Controller/LoginController.php';
+	require_once 'Controller/MasterController.php';
+	require_once 'Controller/RegisterController.php';
+	
+	require_once 'Model/DAL/DB_settings.php';
+	require_once 'Model/DAL/DishDAL.php';
+	require_once 'Model/DAL/LoginDAL.php';
+	require_once 'Model/Constants.php';
+	require_once 'Model/Dish.php';
+	require_once 'Model/DishHandler.php';
+	require_once 'Model/LoginHandler.php';
+	require_once 'Model/RegisterHandler.php';
+	require_once 'Model/User.php';
+	require_once 'Model/Validator.php';
+	
+	require_once 'View/LoggedInView.php';
+	require_once 'View/LoginView.php';
+	require_once 'View/RegisterView.php';
 	
 	session_start();
 	
-	echo "<h1>Test</h1>";
-	
-	/*
-	 * 
-	 * Test LoginView.php
-	 * Login- and logoutbutton, GetUserName() and GetPassword()
-	 * 
-	 */
-	
-	echo "<h2>LoginView.php</h2>";
-	
-	$loginView = new LoginView();
-	echo $loginView->DoLoginBox();
-	echo $loginView->DoLogoutBox();
-	
-	
-	//Test login-button 
-	if ($loginView->TriedToLogin() == true ) 
-	{
-	  	echo "User clicked Login with username: ";
-		//Test GetUserName() and GetPassword()
-	  	echo $loginView->GetUserName() . " and password: " . $loginView->GetPassword();
-		
-		if (isset($_POST['keepLoggedIn']) && $_POST['keepLoggedIn'] == "keepLoggedIn"){
-			echo "<br />Keep user logged in was checked.";
-		}
-	}
-	//Test logout-button
-	if ($loginView->TriedToLogout() ) 
-	{
-	  	echo "<br />User clicked Logout";
-	}
-	
-	/*
-	 * 
-	 * Test LoginHandler.php
-	 * DoLogin(), DoLogout(), IsLoggedIn()
-	 * 
-	 */
 	
 	if (TestLoginHandler() == true){
 		echo "<h2>LoginHandler.php OK</h2>";
+	}
+	else{
+		echo "<h2>LoginHandler.php FAILED</h2>";
 	}
 	
 	/*
@@ -67,8 +41,8 @@
 		
 		//Users	
 		$validUser = new User();
-		$validUser->SetUsername("saltat2");
-		$validUser->SetPassword($validUser->HashPassword("Saltat1234"));
+		$validUser->SetUsername("Test");
+		$validUser->SetPassword($validUser->HashPassword("Test1234"));
 		
 		$invalidUser = new User();
 		$invalidUser->SetUsername("sdfgsghdfghdgh");
@@ -123,10 +97,51 @@
 	}
 	
 	
+	
+	/*
+	 * 
+	 * Test LoginView.php
+	 * Login- and logoutbutton, GetUserName() and GetPassword()
+	 * 
+	 */
+	
+	echo "<h2>LoginView.php</h2>";
+	
+	$loginView = new LoginView();
+	echo $loginView->DoLoginBox();
+	echo $loginView->DoLogoutBox();
+	
+	
+	//Test login-button 
+	if ($loginView->TriedToLogin() == true ) 
+	{
+	  	echo "User clicked Login with username: ";
+		//Test GetUserName() and GetPassword()
+	  	echo $loginView->GetUserName() . " and password: " . $loginView->GetPassword();
+		
+		if (isset($_POST['keepLoggedIn']) && $_POST['keepLoggedIn'] == "keepLoggedIn"){
+			echo "<br />Keep user logged in was checked.";
+		}
+	}
+	//Test logout-button
+	if ($loginView->TriedToLogout() ) 
+	{
+	  	echo "<br />User clicked Logout";
+	}
+	
+	/*
+	 * 
+	 * Test LoginHandler.php
+	 * DoLogin(), DoLogout(), IsLoggedIn()
+	 * 
+	 */
+	
+	
+	
 	/*
 	 * 
 	 * Test LoginDAL.php
-	 * CheckUsernameExists(), ComparePassword(), AddUser(), DeleteUser()
+	 * GetUserByName(), ComparePassword(), AddUser(), DeleteUser()
 	 * 
 	 */
 	
@@ -144,20 +159,20 @@
 	 	$loginDAL = new LoginDAL();
 		
 		$validUser = new User();
-		$validUser->SetUsername("saltat2");
-		$validUser->SetPassword($validUser->HashPassword("Saltat1234"));
+		$validUser->SetUsername("Test");
+		$validUser->SetPassword($validUser->HashPassword("Test1234"));
 		
 		$invalidUser = new User();
 		$invalidUser->SetUsername("sdfgsghdfghdgh");
 		$invalidUser->SetPassword("dfghdfghhdfghdfgh");
 		
 		$rightNameWrongPass = new User();
-		$rightNameWrongPass->SetUsername("saltat2");
+		$rightNameWrongPass->SetUsername("Test");
 		$rightNameWrongPass->SetPassword("ihkjhjh");
 		
 		$wrongNameRightPass = new User();
 		$wrongNameRightPass->SetUsername("kjhkjh");
-		$wrongNameRightPass->SetPassword($validUser->HashPassword("Saltat1234"));
+		$wrongNameRightPass->SetPassword($validUser->HashPassword("Test1234"));
 		
 		$userToAdd = new User();
 		$userToAdd->SetUsername("userrrr");
@@ -170,15 +185,15 @@
 			return false;
 		}
 		
-		//Test CheckUsernameExists with existing username
-		if ($loginDAL->CheckUsernameExists($validUser) == false){
-			echo "CheckUsernameExists returned false when checking for an existing username.<br />";
+		//Test GetUserByName with existing username
+		if ($loginDAL->GetUserByName($validUser) == false){
+			echo "GetUserByName returned false when checking for an existing username.<br />";
 			return false;
 		}
 		
-		//Test CheckUsernameExists with wrong username
-		if ($loginDAL->CheckUsernameExists($invalidUser) == true){
-			echo "CheckUsernameExists returned true when checking for an invalid username.<br />";
+		//Test GetUserByName with wrong username
+		if ($loginDAL->GetUserByName($invalidUser) == true){
+			echo "GetUserByName returned true when checking for an invalid username.<br />";
 			return false;
 		}
 		
@@ -208,7 +223,7 @@
 		
 		//Test AddUser
 		//Check if user exists
-		if ($loginDAL->CheckUsernameExists($userToAdd) == false){
+		if ($loginDAL->GetUserByName($userToAdd) == false){
 			//Try to add user	
 			if($loginDAL->AddUser($userToAdd)){
 				echo "User was added.<br />";
@@ -221,7 +236,7 @@
 		
 		//Test DeleteUser
 		//Check if user exists
-		if ($loginDAL->CheckUsernameExists($userToAdd) == true){
+		if ($loginDAL->GetUserByName($userToAdd) == true){
 			//Try to delete user
 			if($loginDAL->DeleteUser($userToAdd) == true){
 				echo "User was deleted.<br />";
