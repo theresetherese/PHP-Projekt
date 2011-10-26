@@ -4,7 +4,7 @@
 	require_once 'Model/Dish.php';
 	require_once 'Model/User.php';
 	require_once 'Model/DishHandler.php';
-	//require_once 'Controller/DishController.php';
+	require_once 'Controller/DishController.php';
 	require_once 'Model/Constants.php';
 	//require_once 'View/DishView.php';
 	require_once 'Model/Validator.php';

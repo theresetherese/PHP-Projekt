@@ -29,7 +29,10 @@
 				
 				
 			}
-
+			
+			
+		
+			
 			//Login form
 			else {
 				//Create an instance of LoginController

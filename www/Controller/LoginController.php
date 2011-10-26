@@ -35,11 +35,11 @@
 					//Try to login with cookies
 					$user = $loginView->HasCookies();
 					if($loginHandler->DoCookieLogin($user) == true){
-						$xhtml = "COOKIELOGIN";	
-						$xhtml .= $this->DoLoggedIn();
-						
 						//Create new cookiedata
-						$loginView->KeepUserLoggedIn($user);
+						$loginView->KeepUserLoggedIn($user);	
+						
+						$xhtml = $this->DoLoggedIn();
+						
 					}
 					//Cookie login failed
 					else {
@@ -114,8 +114,10 @@
 			$loginView = new LoginView();
 			$loginHandler = new LoginHandler();
 			
-			$loggedInController = new LoggedInController();
-			$xhtml = $loggedInController->DoControll();
+			
+			//DishController
+			$dishController = new DishController();
+			$xhtml = $dishController->DoControll();
 			
 			//Logout-box
 			$xhtml .= $loginView->DoLogoutBox();
@@ -123,15 +125,14 @@
 			//Check if user tries to log out
 			if($loginView->TriedToLogout() == true){
 				
+				//Delete cookies on user aagent
+				$loginView->DeleteCookies();
+										
 				//Log out
 				$loginHandler->DoLogout();
 				
-				//Delete cookies on user aagent
-				$loginView->DeleteCookies();
-				
-				$xhtml = $loginView->DoLoggedOutText();
-				$xhtml .= $loginView->DoLoginBox();
-				$xhtml .= $loginView->DoRegisterLink();
+				//Reload just in case...
+				header("Location: index.php");
 			}
 			
 			return $xhtml;

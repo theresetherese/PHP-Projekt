@@ -57,14 +57,10 @@
 			return "<h1>Fel användarnamn eller lösenord.</h1>";
 		}
 		
-		//Return text for already logged in user
-		public function DoLoggedInText(){
-			return "<h1>Hello " . $_SESSION[Constants::LoggedInUserSessionKey] . "</h1>";
-		}
 		
 		//Return logout form
 		public function DoLogoutBox(){
-			return "<form method='post' action='?'>
+			return "<form method='post' action='index.php'>
 				<p>
 					<input type='submit' id='" . Constants::LogoutPostKey . "' name='" . Constants::LogoutPostKey . "' value='" . Constants::LogoutPostValue . "' />
 				</p>
@@ -80,7 +76,9 @@
 		public function DoRegisterLink(){
 			return '<a href="?' . Constants::RegisterGetKey . '=' . Constants::RegisterGetValue . '">Registrera dig</a>';
 		}
-
+		
+		
+		
 		
 		/*
 		 * 
@@ -213,6 +211,7 @@
 		public function TriedToLogout(){
 			if (isset($_POST[Constants::LogoutPostKey]) == true){
 				if ($_POST[Constants::LogoutPostKey] == Constants::LogoutPostValue){
+
 					return true;
 				}
 				return false;

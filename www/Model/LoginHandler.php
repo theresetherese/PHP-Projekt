@@ -66,8 +66,7 @@
 		
 		//Log out user
 		public function DoLogout(){
-			unset($_SESSION[Constants::LoggedInSessionKey]);
-			unset($_SESSION[Constants::LoggedInUserSessionKey]);
+			session_destroy();
 		}
 		
 		//Return true if user is logged in
@@ -76,6 +75,7 @@
 				if($_SESSION[Constants::LoggedInSessionKey] == Constants::LoggedInSessionValue){	
 					return true;
 				}
+				return false;
 			}
 			//Ingen är inloggad
 			return false;

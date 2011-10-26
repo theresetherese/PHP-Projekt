@@ -52,9 +52,9 @@
 			$this->myConnection->close();
 		}
 		
-		public function GetUserByName (User $user){
+		public function GetUserById (User $user){
 			//Save username	
-			$id= $user->GetUserId()();
+			$id= $user->GetUserId();
 			$affectedRows = 0;
 			
 			//SQL

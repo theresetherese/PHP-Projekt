@@ -22,4 +22,9 @@
 			return $dishDAL->DeleteDish($dish);
 		}
 		
+		public function DishNameExists(Dish $dish, User $user){
+			$dishDAL = new DishDAL();
+			return $dishDAL->DishNameExists($dish, $user);
+		}
+		
 	}

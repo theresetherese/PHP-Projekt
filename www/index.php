@@ -1,6 +1,6 @@
 <?php
 
-	require_once 'Controller/LoggedInController.php';
+	require_once 'Controller/DishController.php';
 	require_once 'Controller/LoginController.php';
 	require_once 'Controller/MasterController.php';
 	require_once 'Controller/RegisterController.php';
@@ -16,7 +16,7 @@
 	require_once 'Model/User.php';
 	require_once 'Model/Validator.php';
 	
-	require_once 'View/LoggedInView.php';
+	require_once 'View/DishView.php';
 	require_once 'View/LoginView.php';
 	require_once 'View/RegisterView.php';
 	
