@@ -17,7 +17,7 @@
 		
 		//Return welcome-text
 		public function DoRegisterText() {
-			return "<h1>Register user</h1>";
+			return "<h1>Registrera användare</h1>";
 		}
 		
 		//Return registration form
@@ -26,7 +26,7 @@
 			//Start registration form	
 			$form = "<form method='post'>
 				<p>
-					<label for='username'>Username: </label>
+					<label for='username'>Användarnamn: </label>
 					<input type='text' id='username' name='username' required='required' pattern='^[a-z0-9]+[a-z0-9\.\-_]?([a-z0-9]+)\$' />
 				</p>
 				<p>
@@ -34,11 +34,11 @@
 					<input type='email' id='email' name='email' required='required' pattern='^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})\$' />
 				</p>
 				<p>
-					<label for='password'>Password: </label>		
+					<label for='password'>Lösenord: </label>		
 					<input type='password' id='password' name='password' required='required' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}' />
 				</p>
 				<p>
-					<label for='confirmPassword'>Confirm password: </label>		
+					<label for='confirmPassword'>Lösenord: </label>		
 					<input type='password' id='confirmPassword' name='confirmPassword' required='required' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}' />
 				</p>
 				<p>
@@ -52,32 +52,38 @@
 		
 		//Return text for invalid username
 		public function DoInvalidUsername(){
-			return "<p>The username must start and end with the letters a-z or a digit, and can only contain the special characters . _ -</p>";
+			return "<p>Fel format på användarnamn.</p>
+			<ul>
+				<li>Måste börja och sluta med bokstäver eller siffror</li>
+				<li>Får bara innehålla små bokstäver</li>
+				<li>Punkt (.), bindesstreck (-) och underscore (_) är tillåtna specialtecken</li>
+			</ul>
+			";
 		}
 		
 		//Return text for invalid password
 		public function DoInvalidPassword(){
-			return "<p>The password must be between 6 and 30 characters long, and must contain an uppercase letter, a lowercase letter and a digit.</p>";
+			return "<p>Lösenordet ska vara 8-30 tecken och måste minst innehålla stor bokstav, liten bokstav och siffra. Specialtecken är tillåtna.</p>";
 		}
 		
 		//Return text for invalid password
 		public function DoInvalidEmail(){
-			return "<p>Enter a valid email address.</p>";
+			return "<p>Felaktig e-postadress.</p>";
 		}
 		
 		//return text for invalid submission
 		public function DoInvalidSubmission(){
-			return "<h1>Registration failed.</h1>";
+			return "<h1>Registreringen misslyckades</h1>";
 		}
 		
 		//Return text for successful registration
 		public function DoRegisterSuccessText(){
-			return "<h1>Registration completed.</h1>";
+			return "<h1>Användaren registrerades!</h1>";
 		}
 		
 		//Return text for failed registration
 		public function DoRegisterFailText(){
-			return "<h1>Registration failed. Please try again.</h1>";
+			return "<h1>Registreringen misslyckades, försök igen</h1>";
 		}
 		
 		//Return link to login

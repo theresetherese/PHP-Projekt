@@ -114,8 +114,12 @@
 			$loginView = new LoginView();
 			$loginHandler = new LoginHandler();
 			
+			$user = $loginView->GetLoggedInUser();
+			
+			$xhtml = $loginView->DoLoggedInText($user);
+			
 			//Logout-box
-			$xhtml = $loginView->DoLogoutBox();
+			$xhtml .= $loginView->DoLogoutBox();
 			
 			//Check if user tries to log out
 			if($loginView->TriedToLogout() == true){
@@ -134,7 +138,7 @@
 			
 			//DishController
 			$dishController = new DishController();
-			$xhtml .= $dishController->DoControll();
+			$xhtml .= $dishController->DoControll($user);
 			
 			
 			

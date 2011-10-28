@@ -124,6 +124,10 @@
 			return $this->dishes;
 		}
 		
+		public function ClearDishes(){
+			$this->dishes = array();
+		}
+		
 		public function PushDish(Dish $dish){
 			array_push($this->dishes, $dish);
 		}

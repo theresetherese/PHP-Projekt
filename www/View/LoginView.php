@@ -67,9 +67,9 @@
 			</form>";
 		}
 		
-		//Return text for logged out user
-		public function DoLoggedOutText(){
-			return "<h1>Du är utloggad!</h1>";
+		//Return text for logged in users
+		public function DoLoggedInText(User $user){
+			return "<h1>Vad ska jag äta idag?</h1><p>Hej, " . $user->GetUsername() . "</p>";
 		}
 		
 		//Return link to registration
@@ -166,6 +166,16 @@
 			$user->SetIP($this->GetIP());
 			
 			return $user;
+		}
+		
+		public function GetLoggedInUser(){
+			if(isset($_SESSION[Constants::LoggedInUserSessionKey])){
+				$user = new User();
+				$user->SetUsername($_SESSION[Constants::LoggedInUserSessionKey]);
+				return $user;
+			}
+			
+			return false;
 		}
 		
 		//If client has cookies, validate and save them to user object with ip and return user object

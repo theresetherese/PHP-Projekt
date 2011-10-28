@@ -12,6 +12,10 @@
 			$creationDate = "";
 			$dishInfo = "";
 			$url = "";
+			
+			//Clear users dishes to avoid duplicates
+			$user->ClearDishes();
+			
 			//SQL
 			if ($stmt = $this->myConnection->prepare("SELECT id, dishName, creationDate, dishInfo, url FROM Dish WHERE userId = ? ORDER BY dishName")){
 				$stmt->bind_param("i", $userId);

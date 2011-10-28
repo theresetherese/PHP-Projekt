@@ -28,4 +28,18 @@
 			return $dishDAL->DishNameExists($dish, $user);
 		}
 		
+		public function GetRandomDish(User $user){
+			//Get a random indexnumber from dishes array
+			$numberOfDishes = count($user->GetDishes());
+			$randomNumber = rand(0, $numberOfDishes - 1);
+			
+			//Array with dishes
+			$dishes = $user->GetDishes();
+			//Choose a dish
+			$dish = $dishes[$randomNumber];
+			//Return dishinfo	
+			$dishDAL = new DishDAL();
+			return $dishDAL->GetDish($dish);
+		}
+		
 	}
