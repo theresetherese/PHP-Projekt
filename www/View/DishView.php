@@ -46,6 +46,13 @@
 					$xhtml .= $dish->GetDishInfo();
 					$xhtml .= '</p>';
 				}
+				
+				$dateAdded = new DateTime($dish->GetCreationDate());
+				
+				$xhtml .= '<p>Skapad: ';
+				$xhtml .= $dateAdded->format('Y-m-d');
+				$xhtml .= '</p>';
+
 				if($dish->GetUrl() != ""){
 					$xhtml .= '<p>';
 					$xhtml .= '<a href="';

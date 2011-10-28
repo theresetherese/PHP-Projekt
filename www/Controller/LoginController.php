@@ -114,13 +114,8 @@
 			$loginView = new LoginView();
 			$loginHandler = new LoginHandler();
 			
-			
-			//DishController
-			$dishController = new DishController();
-			$xhtml = $dishController->DoControll();
-			
 			//Logout-box
-			$xhtml .= $loginView->DoLogoutBox();
+			$xhtml = $loginView->DoLogoutBox();
 			
 			//Check if user tries to log out
 			if($loginView->TriedToLogout() == true){
@@ -131,9 +126,17 @@
 				//Log out
 				$loginHandler->DoLogout();
 				
-				//Reload just in case...
-				header("Location: index.php");
+				$xhtml = $this->DoNotLoggedIn();
+				
+				return $xhtml;
 			}
+			
+			
+			//DishController
+			$dishController = new DishController();
+			$xhtml .= $dishController->DoControll();
+			
+			
 			
 			return $xhtml;
 		}
