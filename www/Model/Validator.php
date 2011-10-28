@@ -6,7 +6,7 @@ class Validator{
 	const ssNr10 = '^[0-9][0-9](0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])-?[0-9]{4}^'; //matchar 8911027202 eller 891102-7202
 	const dateRegex = '^(19|20)?[0-9][0-9]-?(0[1-9]|1[012])-?(0[1-9]|[12][0-9]|3[01])$^'; //matchar 11-09-30, 110930, 2011-09-30
 	const passwordRegex = '^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])([0-9 A-Z a-z]{8,25})$^'; //Kräver liten bokstav, stor bokstav, siffra och mellan 8-25 tecken
-	const passwordRegex2 = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}^'; //Kräver liten bokstav, stor bokstav, siffra och kan innehålla specialtecken
+	const passwordRegex2 = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}^'; //Kräver liten bokstav, stor bokstav, siffra och kan innehålla specialtecken
 	const lettersAndDigitsRegex = '/^[a-zåäöA-ZÅÄÖ0-9\s]+$/';
 	const usernameRegex2 = '/^[a-z0-9]+[a-z0-9\.\-_]?([a-z0-9]+)$/';
 	const thumbnailRegex = '';

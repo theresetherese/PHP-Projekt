@@ -17,30 +17,31 @@
 		 *  
 		 */
 		
-		public function GetUserByName (User $user){
+		public function GetUserByName(User $user){
 			//Save username	
 			$username = $user->GetUsername();
-			$affectedRows = 0;
+			$id = 0;
+			$email = "";
 			
 			//SQL
-			if ($stmt = $this->myConnection->prepare("SELECT id, email FROM User WHERE username = ?")){
+			if($stmt = $this->myConnection->prepare("SELECT id, email FROM User WHERE username = ?")){
 				$stmt->bind_param("s", $username);
 				$stmt->execute();
-				$stmt->store_result();
-				$affectedRows = $stmt->num_rows;
-					
-				if($affectedRows > 0){
-					$stmt->bind_result($id, $email);
+				$stmt->bind_result($id, $email);
+				$stmt->fetch();
+				
+				if($id > 0){
 					$user->SetUserId($id);
 					$user->SetEmail($email);
+					//Close
+					$stmt->close();
 					return $user;
 				}
 				else{
+					//Close
+					$stmt->close();
 					return false;	
 				}
-				
-				//Close
-				$stmt->close();
 				
 			}
 			else{
@@ -66,6 +67,7 @@
 					
 				if($affectedRows > 0){
 					$stmt->bind_result($id, $email);
+					$stmt->fetch();
 					$user->SetUserId($id);
 					$user->SetEmail($email);
 					return $user;

@@ -22,23 +22,24 @@
 		
 		//Return registration form
 		public function DoRegisterBox(){
+			$validator = new Validator();
 			//Start registration form	
 			$form = "<form method='post'>
 				<p>
 					<label for='username'>Username: </label>
-					<input type='text' id='username' name='username' />
+					<input type='text' id='username' name='username' required='required' pattern='^[a-z0-9]+[a-z0-9\.\-_]?([a-z0-9]+)\$' />
 				</p>
 				<p>
 					<label for='username'>Email: </label>
-					<input type='text' id='email' name='email' />
+					<input type='email' id='email' name='email' required='required' pattern='^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})\$' />
 				</p>
 				<p>
 					<label for='password'>Password: </label>		
-					<input type='password' id='password' name='password' />
+					<input type='password' id='password' name='password' required='required' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}' />
 				</p>
 				<p>
 					<label for='confirmPassword'>Confirm password: </label>		
-					<input type='password' id='confirmPassword' name='confirmPassword' />
+					<input type='password' id='confirmPassword' name='confirmPassword' required='required' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}' />
 				</p>
 				<p>
 					<input type='submit' id='registerButton' name='" . Constants::RegisterPostKey . "' value='" . Constants::RegisterPostValue . "' />

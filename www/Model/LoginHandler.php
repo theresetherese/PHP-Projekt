@@ -86,4 +86,11 @@
 			$loginDAL = new LoginDAL();
 			$loginDAL->KeepUserLoggedIn($user);
 		}
+		
+		//Get user by name
+		public function GetUserByName(User $user){
+			$loginDAL = new LoginDAL();
+			$user = $loginDAL->GetUserByName($user);
+			return $user;
+		}
 	}

@@ -32,11 +32,11 @@
 					<legend>Logga in</legend>
 					<p>
 						<label for='username'>Användarnamn: </label>
-						<input type='text' id='username' name='username' />
+						<input type='text' id='username' name='username' required='required' />
 					</p>
 					<p>
 						<label for='password'>Lösenord: </label>		
-						<input type='password' id='password' name='password' />
+						<input type='password' id='password' name='password' required='required' />
 					</p>
 					<p>
 						<label for='keepLoggedIn'>Kom ihåg mig</label>

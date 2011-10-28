@@ -24,6 +24,7 @@
 		
 		
 		public function SetUsername($_username){
+			$_username = strtolower($_username);	
 			$this->username = $_username;
 		}
 		

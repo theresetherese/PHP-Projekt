@@ -6,19 +6,18 @@
 		
 		//Get all dishes from user
 		public function GetDishes(User $user){
-			//Save username	
 			$userId = $user->GetUserId();
 			$dishId = 0;
 			$dishName = "";
 			$creationDate = "";
 			$dishInfo = "";
 			$url = "";
-			
 			//SQL
-			if ($stmt = $this->myConnection->prepare("SELECT id, dishName, creationDate, dishInfo, url FROM Dish WHERE userId = ?")){
+			if ($stmt = $this->myConnection->prepare("SELECT id, dishName, creationDate, dishInfo, url FROM Dish WHERE userId = ? ORDER BY dishName")){
 				$stmt->bind_param("i", $userId);
 				$stmt->execute();
 				$stmt->bind_result($dishId, $dishName, $creationDate, $dishInfo, $url);
+				
 				while($stmt->fetch()){
 					$dish = new Dish();
 					$dish->SetId($dishId);

@@ -51,7 +51,8 @@
 		}
 		
 		public function SetDishInfo($_dishInfo){
-			$this->dishInfo = htmlspecialchars($_dishInfo);
+			$validator = new Validator();
+			$this->dishInfo = $validator->stripJavascript($_dishInfo);
 		}
 		
 		public function GetUrl(){

@@ -17,9 +17,9 @@
 		const RegisterGetKey = "register";
 		const RegisterGetValue = "register";
 		const UserViewGetKey = "user";
-		const DishViewGetKey = "dish";
+		
 		const DishViewAllGetValue = "all";
-		const DishViewAddGetValue = "add";
+		
 		
 		/*
 		 * POST keys and values
@@ -36,6 +36,9 @@
 		
 		const RegisterPostKey = "regiserUser";
 		const RegisterPostValue = "Registrera";
+		
+		const DishViewPostKey = "dish";
+		const DishViewAddPostValue = "Lägg till maträtt";
 		
 		/*
 		 * SESSIONS
