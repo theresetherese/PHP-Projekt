@@ -4,7 +4,9 @@
 	
 	class DishDAL{
 		
-		//Get all dishes from user
+		/*
+		 * Get a users dishes from database.
+		 */
 		public function GetDishes(User $user){
 			$userId = $user->GetUserId();
 			$dishId = 0;
@@ -39,13 +41,14 @@
 				
 			}
 			else{
-				throw new Exception("Database Error.", 1);
-					
+				//TODO Logga fel					
 			}
 			
 		}
 		
-		//Get a specific dish by id
+		/*
+		 * Get a specific dish by dishId
+		 */
 		public function GetDish(Dish $dish){
 			$dishId = $dish->GetId();
 			//SQL
@@ -65,12 +68,13 @@
 				return $dish;
 			}
 			else{
-				throw new Exception("Database Error.", 1);
-					
+				//TODO Logga fel					
 			}
 		}
 		
-		//Check if dishname exists
+		/*
+		 * Check if user has a dish with specified name
+		 */ 
 		public function DishNameExists(Dish $dish, User $user){
 			$dishName = $dish->GetDishName();
 			$userId = $user->GetUserId();
@@ -95,13 +99,15 @@
 				
 			}
 			else{
-				throw new Exception("Database Error.", 1);
+				//TODO Logga fel
 					
 			}
 		}
 		
 		
-		//Add a dish
+		/*
+		 * Add a dish. Return false if INSERT fails
+		 */
 		public function AddDish(Dish $dish, User $user){
 			$userId = $user->GetUserId();	
 			$dishName = $dish->GetDishName();
@@ -132,7 +138,9 @@
 			
 		}
 		
-		//Delete a dish
+		/*
+		 * Delete a dish. Return false if DELETE fails.
+		 */
 		public function DeleteDish(Dish $dish){
 			$dishId = $dish->GetId();
 			$rowsAffected = 0;

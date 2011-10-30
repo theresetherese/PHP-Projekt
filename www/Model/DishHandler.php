@@ -37,9 +37,8 @@
 			$dishes = $user->GetDishes();
 			//Choose a dish
 			$dish = $dishes[$randomNumber];
-			//Return dishinfo	
-			$dishDAL = new DishDAL();
-			return $dishDAL->GetDish($dish);
+
+			return $dish;
 		}
 		
 	}

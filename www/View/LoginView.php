@@ -52,11 +52,6 @@
 			return $form;
 		}
 		
-		//Return text for wrong user credentials
-		public function DoWrongCredentialsText(){
-			return "<h1>Fel användarnamn eller lösenord.</h1>";
-		}
-		
 		
 		//Return logout form
 		public function DoLogoutBox(){
@@ -77,7 +72,10 @@
 			return '<a href="?' . Constants::RegisterGetKey . '=' . Constants::RegisterGetValue . '">Registrera dig</a>';
 		}
 		
-		
+		//Error text
+		public function DoErrorText(ErrorMessage $error){
+			return $error->GetMessage();
+		}
 		
 		
 		/*
@@ -112,8 +110,7 @@
 			if ($this->GetUserName() != false && $this->GetPassword() != false){
 					
 				$username = $this->GetUserName();
-				$password = $this->GetPassword();	
-				$ip = $this->GetIP();
+				$password = $this->GetPassword();
 				
 				//Create User object	
 				$user = new User();

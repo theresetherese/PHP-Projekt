@@ -2,32 +2,32 @@
 
 	
 	class RegisterHandler{
-		
-		public function DoRegister(User $user){
-			$loginDAL = new LoginDAL();
 			
-			if($loginDAL->GetUserByName($user) != false){
-				return false;
+		public function DoesUserExist(User $user){
+			$loginDAL = new LoginDAL();	
+			if($loginDAL->GetUserByName($user) instanceof User){
+				$error = new ErrorMessage(ErrorStrings::UserExists);
+				return $error;
 			}
 			else{
-				if($loginDAL->AddUser($user) == true){
-					return true;
-				}
 				return false;
 			}
+		}	
+		
+		public function DoRegister(User $user){
+			$loginDAL = new LoginDAL();		
+			if($loginDAL->AddUser($user) == true){
+				return true;
+			}
+			return false;
 		}
 		
 		public function DoDelete (User $user){
-			$loginDAL = new LoginDAL();
-			
-			if($loginDAL->GetUserByName($user) != false){
-				if($loginDAL->DeleteUser($user) == true){
-					return true;
-				}
+			$loginDAL = new LoginDAL();		
+			if($loginDAL->DeleteUser($user) == true){
+				return true;
 			}
-			else{
-				return false;
-			}
+			return false;
 		}
 		
 	}

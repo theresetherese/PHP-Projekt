@@ -50,12 +50,13 @@
 					$xhtml = $this->DoNotLoggedIn();
 				}
 				
-				return $xhtml;
 			}
 			//If IsLoggedIn doesn't return true or false, then something is wrong.
 			else {
-				throw new Exception("Error when generating page.", 1);
+				$error = new ErrorMessage(ErrorStrings::DefaultError);
+				$xhtml = $loginView->DoErrorText($error);
 			}
+			return $xhtml;
 		}
 
 
@@ -72,7 +73,7 @@
 			//Check if user tries to log in
 			if ($loginView->TriedToLogin() == true){
 				
-				//Proceed if form is filled
+				//Proceed if form is filled correctly
 				if ($loginView->GetUser() != false){
 					
 					//Save user info
@@ -93,14 +94,18 @@
 					}
 					//If wrong username and password
 					else {
-						$xhtml = $loginView->DoWrongCredentialsText();
+						$error = new ErrorMessage(ErrorStrings::WrongCredentials);
+						$xhtml = $loginView->DoWelcomeText();
+						$xhtml .= $loginView->DoErrorText($error);
 						$xhtml .= $loginView->DoLoginBox();
 						$xhtml .= $loginView->DoRegisterLink();
 					}
 				}
 				//Form isn't filled correctly
 				else{
-					$xhtml = $loginView->DoWrongCredentialsText();
+					$error = new ErrorMessage(ErrorStrings::WrongCredentials);
+					$xhtml = $loginView->DoWelcomeText();
+					$xhtml .= $loginView->DoErrorText($error);
 					$xhtml .= $loginView->DoLoginBox();
 					$xhtml .= $loginView->DoRegisterLink();
 				}
@@ -114,7 +119,16 @@
 			$loginView = new LoginView();
 			$loginHandler = new LoginHandler();
 			
+			//Get username of logged in user
 			$user = $loginView->GetLoggedInUser();
+			//Get user information
+			$user = $loginHandler->GetUserByName($user);
+			
+			//If user is false, then the username doesn't exists and something is wrong
+			if($user == false){
+				//TODO Log error
+				$loginHandler->DoLogout();
+			}
 			
 			$xhtml = $loginView->DoLoggedInText($user);
 			

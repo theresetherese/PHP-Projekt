@@ -58,4 +58,6 @@
 		const KeepLoggedInCookieToken = "vsjai_token";
 		const KeepLoggedInCookieUserName = "vsjai_un";
 		const CookieTime = 604800;	
+		
+		
 	}

@@ -29,7 +29,7 @@
 				$stmt->execute();
 				$stmt->bind_result($id, $email);
 				$stmt->fetch();
-				
+
 				if($id > 0){
 					$user->SetUserId($id);
 					$user->SetEmail($email);
@@ -196,12 +196,20 @@
 			$password = $user->GetPassword();
 			$email = $user->GetEmail();
 			$ip = $user->GetIP();
+			$rowsAffected = 0;
 			
 			if($stmt = $this->myConnection->prepare("INSERT INTO User VALUES('',?,?,?,'',?)")){
 				$stmt->bind_param("ssss", $username, $password, $email, $ip);
 				$stmt->execute();
+				$rowsAffected = $stmt->affected_rows;
 				$stmt->close();
-				return true;
+				
+				if($rowsAffected > 0){
+					return true;
+				}
+				else{
+					return false;
+				}
 			}
 			else{
 				throw new Exception("Database Error.", 1);

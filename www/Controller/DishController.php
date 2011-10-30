@@ -6,22 +6,10 @@
 			$dishView = new DishView();
 			$dishHandler = new DishHandler();
 			
-			//Get userid
-			$loginHandler = new LoginHandler();
-			$user = $loginHandler->GetUserByName($user);
-			
-			//If user is false, then the username doesn't exists
-			if($user == false){
-				//TODO Handle error when username doesnt exist. Log out?
-				throw new Exception("Error Processing Request", 1);
-			}
-			
-			//Get dishes from user
-			$user = $dishHandler->GetDishes($user);
-			
+			//Present form to add dish
 			$xhtml = $this->DoDishForm($user);
 				
-			//Update dishes
+			//Get dishes from user
 			$user = $dishHandler->GetDishes($user);
 			
 			
@@ -31,11 +19,18 @@
 				//Get random dish
 				$randomDish = $dishHandler->GetRandomDish($user);
 				
-				//View random dish, add dish form and all dishes	
-				$xhtml .= $dishView->DoRandomDish($randomDish);
+				if($randomDish instanceof Dish){
+					//View random dish	
+					$xhtml .= $dishView->DoRandomDish($randomDish);
+				}
+				else{
+					$error = new ErrorMessage();
+					$xhtml .= $dishView->DoErrorText($error);
+				}
 			}
 			else{
-				$xhtml .= $dishView->DoNoDishes();
+				$error = new ErrorMessage(ErrorStrings::TooFewDishes);
+				$xhtml .= $dishView->DoErrorText($error);
 			}
 			
 			//view all dishes
@@ -57,24 +52,29 @@
 				//Collect form input
 				$dish = $dishView->GetDishFromForm();
 				
-				//If dish returned is not false, proceed
-				if($dish != false){
+				//If dish actually is a dish
+				if($dish instanceof Dish){
 					//Check if dish already exists
 					if($dishHandler->DishNameExists($dish, $user) == false){
 						//Add dish	
 						if($dishHandler->AddDish($dish, $user) != false){
 							$xhtml .= $dishView->DoAddedDishText();
 						}
+						//Print error message if AddDish() fails
 						else{
-							$xhtml .= $dishView->DoFailedAddDishText();
+							$error = new ErrorMessage(ErrorStrings::CouldNotAddDish);
+							$xhtml .= $dishView->DoErrorText($error);
 						}
 					}
+					//Dish already exists
 					else{
-						$xhtml .= $dishView->DoDishExistsText();
+						$error = new ErrorMessage(ErrorStrings::DishExists);
+						$xhtml .= $dishView->DoErrorText($error);
 					}
 				}
+				//User input was invalid
 				else{
-					//TODO Uppgifterna dish stämmer inte
+					$xhtml .= $dishView->DoErrorText($dish);
 				}				
 			}
 			

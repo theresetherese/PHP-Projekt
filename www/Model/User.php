@@ -22,12 +22,22 @@
 			return $this->username;
 		}
 		
-		
+		/*
+		 * Set username to lowercase to avoid problems. 
+		 */
 		public function SetUsername($_username){
 			$_username = strtolower($_username);	
 			$this->username = $_username;
 		}
 		
+		
+		/*
+		 * Validate username.
+		 * Must be 3-30 characters.
+		 * Can only start and end with letters or digits.
+		 * Can contain . _ - 
+		 * Return true if username ok, else error message
+		 */
 		public function ValidateUsername($_username){
 			$validator = new Validator();
 			
@@ -42,12 +52,14 @@
 				}
 				//Invalid characters
 				else{
-					return false;
+					$error = new ErrorMessage(ErrorStrings::InvalidUsernameCharacters);
+					return $error;
 				}
 			}
 			//Invalid length
 			else{
-				return false;
+				$error = new ErrorMessage(ErrorStrings::InvalidUsernameLength);
+				return $error;
 			}
 		}
 		
@@ -59,6 +71,11 @@
 			$this->email = $_email;
 		}
 		
+		/*
+		 * Validate email adress. 
+		 * Set string to lowercase.
+		 * Return true if email ok, else error message.
+		 */
 		public function ValidateEmail($_email){
 			$validator = new Validator();
 			
@@ -69,7 +86,10 @@
 				return true;
 			}
 			
-			return false;
+			else{
+				$error = new ErrorMessage(ErrorStrings::InvalidEmail);
+				return $error;
+			}
 		}
 		
 		public function GetPassword(){
@@ -80,26 +100,31 @@
 			$this->password = $_password;
 		}
 		
+		/*
+		 * Must be 8-30 characters.
+		 * Must containt lowercase letter, uppercase letter and digit.
+		 * Can contain special characters.
+		 * Can not be same as username.
+		 * Return true if ok, else return error message.
+		 */
 		public function ValidatePassword($_password){
 			$validator = new Validator();
 			
 			//Check if password is valid
 			if($validator->validPassword($_password)){
-				//Confirm that password is not the same as username
-				if($_password != $this->GetUsername()){
-					return true;
-				}
-				//Same as username
-				else{
-					return false;
-				}
+				return true;
 			}
 			//Invalid characters or length
 			else{
-				return false;
+				$error = new ErrorMessage(ErrorStrings::InvalidPasswordCharacters);
+				return $error;
 			}
 		}
 		
+		/*
+		 * Salt + password + sitekey
+		 * Hash with sha512
+		 */
 		public function HashPassword($_password){
 			return hash_hmac('sha512', Constants::Salt . $_password, Constants::SiteKey);
 		}
@@ -107,7 +132,7 @@
 		public function GetCookieData(){
 			return $this->cookieData;
 		}
-		
+		//TODO validate cookiedata
 		public function SetCookieData($_cookieData){
 			$this->cookieData = $_cookieData;
 		}
@@ -115,7 +140,7 @@
 		public function GetIP(){
 			return $this->ip;
 		}
-		
+		//TODO Validate ip
 		public function SetIP($_ip){
 			$this->ip = $_ip;
 		}

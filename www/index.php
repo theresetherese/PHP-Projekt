@@ -11,6 +11,8 @@
 	require_once 'Model/Constants.php';
 	require_once 'Model/Dish.php';
 	require_once 'Model/DishHandler.php';
+	require_once 'Model/ErrorMessage.php';
+	require_once 'Model/ErrorStrings.php';
 	require_once 'Model/LoginHandler.php';
 	require_once 'Model/RegisterHandler.php';
 	require_once 'Model/User.php';

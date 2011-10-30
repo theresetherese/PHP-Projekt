@@ -25,17 +25,28 @@
 			$this->dishName = $_dishName;
 		}
 		
+		/*
+		 * Validate dish name.
+		 * Must be 3-50 characters.
+		 * Can only contain letters and digits.
+		 * Return true if name is ok, else return error message.
+		 */
 		public function ValidateDishName($_dishName){
 			$validator = new Validator();
 			
-			if(strlen($_dishName) <= 50 && strlen($_dishName) >= 3){
+			if(strlen($_dishName) <= 50 && strlen($_dishName) >= 3){	
 				if ($validator->validLettersAndDigits($_dishName)){
-					
 					return true;
 				}
-				return false;
+				else{
+					$errorMessage = new ErrorMessage(ErrorStrings::InvalidDishNameCharacters);
+					return $errorMessage;
+				}
 			}
-			return false;
+			else{
+				$errorMessage = new ErrorMessage(ErrorStrings::InvalidDishNameLength);
+				return $errorMessage;
+			}
 		}
 		
 		public function GetCreationDate(){
@@ -50,6 +61,9 @@
 			return $this->dishInfo;
 		}
 		
+		/*
+		 * Remove html and javascript tags. <b> and <i> are allowed. 
+		 */
 		public function SetDishInfo($_dishInfo){
 			$validator = new Validator();
 			$this->dishInfo = $validator->stripJavascript($_dishInfo);
@@ -63,27 +77,17 @@
 			$this->url = $_url;
 		}
 		
+		/*
+		 *Validate url. Return true if ok, else error message. 
+		 */
 		public function ValidateUrl($_url){
 			$validator = new Validator();
 			if ($validator->validUrl($_url) == true){
 				return true;
 			}
-			return false;
-		}
-		
-		public function GetThumbnailUrl(){
-			return $this->thumbnailUrl;
-		}
-		
-		public function SetThumbnailUrl($_thumbnail){
-			$this->thumbnailUrl = $_thumbnailUrl;
-		}
-		
-		public function ValidateThumbnailUrl($_thumbnail){
-			$validator = new Validator();
-			if ($validator->validUrl($_url) == true){
-				return true;
+			else{
+				$errorMessage = new ErrorMessage(ErrorStrings::InvalidDishUrl);
+				return $errorMessage;
 			}
-			return false;
 		}
 	}

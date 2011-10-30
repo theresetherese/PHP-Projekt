@@ -31,6 +31,9 @@
 			return $xhtml;
 		}
 		
+		/*
+		 * Form to add dish 
+		 */
 		public function DoAddDish(){
 			$xhtml = '
 			<fieldset>
@@ -38,11 +41,11 @@
 				<form method="post">
 					<p>
 						<label for="dishname">Namn:</label>
-						<input type="text" name="dishname" id="dishname" required="required" />
+						<input type="text" name="dishname" id="dishname" />
 					</p>
 					<p>
 						<label for="dishurl">Länk:</label>
-						<input type="url" name="dishurl" id="dishurl" />
+						<input type="text" name="dishurl" id="dishurl" />
 					</p>
 					<p>
 						<label for="dishinfo">Information:</label>
@@ -56,6 +59,10 @@
 			';
 			return $xhtml;
 		}
+		
+		/*
+		 * Loop through all dishes and present them in a list
+		 */
 		
 		public function DoAllDishes(User $user){
 			$xhtml = '<h2>Alla sparade maträtter</h2>';	
@@ -94,6 +101,8 @@
 				$xhtml .= '</li>';
 				$xhtml .= '</ul>';
 			}
+
+			//If no dishes exist
 			else{
 				$xhtml .= '<h3>Inga sparade maträtter!</h3>'; 
 			}
@@ -107,20 +116,10 @@
 			return $xhtml;
 		}
 		
-		public function DoFailedAddDishText(){
-			$xhtml = "<p>Maträtten kunde inte läggas till i listan.</p>";
-		}
-		
-		public function DoDishExistsText(){
-			$xhtml = "<p>En maträtt med samma namn finns redan.</p>";
+		public function DoErrorText(ErrorMessage $error){
+			$xhtml = $error->GetMessage();
 			return $xhtml;
 		}
-		
-		public function DoNoDishes(){
-			$xhtml = "<p>Lägg till minst fem maträtter för att börja slumpa!</p>";
-			return $xhtml;
-		}
-		
 		
 		/*
 		 * Collect user input and check GET and POST
@@ -150,50 +149,50 @@
 		}
 		
 		public function ValidateDish(){
+			//Continue if a name is returned
 			if($this->GetDishName() != false){
+					
 				$dishname = $this->GetDishName();
+				
 				$dish = new Dish();
 				
-				if($dish->ValidateDishName($dishname) == true){
-					$dish->SetDishName($dishname);
+				//Validate name
+				if($dish->ValidateDishName($dishname) instanceof ErrorMessage){
+					return $dish->ValidateDishName($dishname);	
 				}
 				else{
-					return false;
+					$dish->SetDishName($dishname);
 				}
 				
-				if($this->GetDishInfo() == true){
+				//Check for information
+				if($this->GetDishInfo() != false){
 					$dishinfo = $this->GetDishInfo();
 					$dish->SetDishInfo($dishinfo);	
 				}
 				
-				if($this->GetDishUrl() == true){
+				//Check for url and validate if it exists
+				if($this->GetDishUrl() != false){
 					$dishurl = $this->GetDishUrl();
-					if($dish->ValidateUrl($dishurl) == true){
-						$dish->SetUrl($dishurl);
+					
+					if($dish->ValidateUrl($dishurl) instanceof ErrorMessage){
+						return $dish->ValidateUrl($dishurl);
 					}
 					else{
-						return false;
+						$dish->SetUrl($dishurl);
 					}
 				}
 				
 				return $dish;
 			}
-			
-			return false;
+			//Name is empty
+			else{
+				$error = new ErrorMessage(ErrorStrings::InvalidDishNameLength);
+				return $error;
+			}
 		}
 		
 		public function GetDishFromForm(){
-			$dish = $this->ValidateDish();
-			
-			if($dish != false){
-				return $dish;
-			}
-			
-			return false;
-		}
-		
-		public function TriedToShowDish(){
-			
+			return $this->ValidateDish();
 		}
 		
 		public function TriedToAddDish(){

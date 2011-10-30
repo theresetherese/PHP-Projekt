@@ -15,16 +15,11 @@
 		 * 
 		 */
 		
-		//Return welcome-text
-		public function DoRegisterText() {
-			return "<h1>Registrera användare</h1>";
-		}
-		
 		//Return registration form
-		public function DoRegisterBox(){
+		public function DoRegisterBox2(){
 			$validator = new Validator();
 			//Start registration form	
-			$form = "<form method='post'>
+			$form = "<h1>Registrera användare</h1><form method='post'>
 				<p>
 					<label for='username'>Användarnamn: </label>
 					<input type='text' id='username' name='username' required='required' pattern='^[a-z0-9]+[a-z0-9\.\-_]?([a-z0-9]+)\$' />
@@ -38,7 +33,7 @@
 					<input type='password' id='password' name='password' required='required' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}' />
 				</p>
 				<p>
-					<label for='confirmPassword'>Lösenord: </label>		
+					<label for='confirmPassword'>Bekräfta lösenord: </label>		
 					<input type='password' id='confirmPassword' name='confirmPassword' required='required' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}' />
 				</p>
 				<p>
@@ -50,30 +45,33 @@
 			return $form;
 		}
 		
-		//Return text for invalid username
-		public function DoInvalidUsername(){
-			return "<p>Fel format på användarnamn.</p>
-			<ul>
-				<li>Måste börja och sluta med bokstäver eller siffror</li>
-				<li>Får bara innehålla små bokstäver</li>
-				<li>Punkt (.), bindesstreck (-) och underscore (_) är tillåtna specialtecken</li>
-			</ul>
-			";
-		}
-		
-		//Return text for invalid password
-		public function DoInvalidPassword(){
-			return "<p>Lösenordet ska vara 8-30 tecken och måste minst innehålla stor bokstav, liten bokstav och siffra. Specialtecken är tillåtna.</p>";
-		}
-		
-		//Return text for invalid password
-		public function DoInvalidEmail(){
-			return "<p>Felaktig e-postadress.</p>";
-		}
-		
-		//return text for invalid submission
-		public function DoInvalidSubmission(){
-			return "<h1>Registreringen misslyckades</h1>";
+		public function DoRegisterBox(){
+			$validator = new Validator();
+			//Start registration form	
+			$form = "<h1>Registrera användare</h1><form method='post'>
+				<p>
+					<label for='username'>Användarnamn: </label>
+					<input type='text' id='username' name='username' />
+				</p>
+				<p>
+					<label for='username'>Email: </label>
+					<input type='text' id='email' name='email' />
+				</p>
+				<p>
+					<label for='password'>Lösenord: </label>		
+					<input type='password' id='password' name='password' />
+				</p>
+				<p>
+					<label for='confirmPassword'>Bekräfta lösenord: </label>		
+					<input type='password' id='confirmPassword' name='confirmPassword' />
+				</p>
+				<p>
+					<input type='submit' id='registerButton' name='" . Constants::RegisterPostKey . "' value='" . Constants::RegisterPostValue . "' />
+				</p>
+			</form>";
+			
+			//Return form
+			return $form;
 		}
 		
 		//Return text for successful registration
@@ -81,14 +79,14 @@
 			return "<h1>Användaren registrerades!</h1>";
 		}
 		
-		//Return text for failed registration
-		public function DoRegisterFailText(){
-			return "<h1>Registreringen misslyckades, försök igen</h1>";
-		}
-		
 		//Return link to login
 		public function DoLoginLink(){
 			return "<a href='?' title='Logga in'>Logga in</a>";
+		}
+		
+		//Error text
+		public function DoErrorText(ErrorMessage $error){
+			return $error->GetMessage();
 		}
 		
 		/*
@@ -136,24 +134,20 @@
 		
 		//Compare the two passwords
 		public function ComparePasswords(){
-			//Check that both passwords are set
-			if($this->GetPassword() != false && $this->GetConfirmPassword() != false){
-				//If both are set, then are they the same?	
-				if($this->GetPassword() === $this->GetConfirmPassword()){
-					return true;
-				}
-				else{
-					return false;
-				}
+			if($this->GetPassword() === $this->GetConfirmPassword()){
+				return true;
 			}
-			return false;
+			else{
+				$error = new ErrorMessage(ErrorStrings::PasswordsDoNotMatch);
+				return $error;
+			}
 		}
 		
 		//Save form data in User object, if it validates
 		public function GetUser(){
 	
 			//Check if post values are OK	
-			if ($this->GetUserName() != false && $this->GetEmail() != false && $this->ComparePasswords() != false){
+			if ($this->GetUserName() != false && $this->GetEmail() != false && $this->GetPassword() != false && $this->GetConfirmPassword() != false){
 					
 				$username = $this->GetUserName();
 				$email = $this->GetEmail();
@@ -162,25 +156,34 @@
 				//Create User object	
 				$user = new User();
 				
-				//Validate username and password
-				if($user->ValidateUsername($username) == true && $user->ValidatePassword($password) == true && $user->ValidateEmail($email) == true){
-					
-					//Set username
-					$user->SetUsername($username);
-					
-					//Set email
-					$user->SetEmail($email);
-										
-					//Salt and hash password, SetPassword
-					$user->SetPassword($user->HashPassword($password));
-					
-					return $user;
+				//Validate username
+				if($user->ValidateUsername($username) instanceof ErrorMessage){
+					return $user->ValidateUsername($username);	
+				}
+				if($user->ValidateEmail($email) instanceof ErrorMessage){
+					return $user->ValidateEmail($email);
+				}
+				if(strtolower($password) == strtolower($username)){
+					$error = new ErrorMessage(ErrorStrings::InvalidPasswordLikeUsername);
+					return $error;
+				}
+				if($user->ValidatePassword($password) instanceof ErrorMessage){
+					return $user->ValidatePassword($password);
+				}
+				if($this->ComparePasswords() instanceof ErrorMessage){
+					return $this->ComparePasswords();
 				}
 				
-				return false;
+				$user->SetUsername($username);
+				$user->SetEmail($email);
+				$user->SetPassword($password);
+				
+				return $user;
+
 			}
 			
-			return false;
+			$error = new ErrorMessage(ErrorStrings::AllFieldsRequired);
+			return $error;
 
 		}
 		
