@@ -9,6 +9,8 @@
 	require_once 'Model/Constants.php';
 	require_once 'Model/Dish.php';
 	require_once 'Model/DishHandler.php';
+	require_once 'Model/ErrorMessage.php';
+	require_once 'Model/ErrorStrings.php';
 	require_once 'Model/LoginHandler.php';
 	require_once 'Model/RegisterHandler.php';
 	require_once 'Model/User.php';
@@ -56,6 +58,8 @@
 		
 		//Force logout
 		$loginHandler->DoLogout();
+		
+		session_start();
 		
 		//IsLoggedIn
 		if($loginHandler->IsLoggedIn() == true){
@@ -165,7 +169,7 @@
 		$invalidUser->SetPassword("dfghdfghhdfghdfgh");
 		
 		$rightNameWrongPass = new User();
-		$rightNameWrongPass->SetUsername("Test");
+		$rightNameWrongPass->SetUsername("test");
 		$rightNameWrongPass->SetPassword("ihkjhjh");
 		
 		$wrongNameRightPass = new User();
@@ -293,55 +297,55 @@
 		}
 		
 		//Invalid username
-		if($user->ValidateUsername("qwertyuiopASDFGHJKL123456789003adfgsdfgsdfgdfghdghsdkjfhglkshfdglkjhsdflkghjlskdfghjlkjh") == true){
-			echo "ValidateUsername() returned true on invalid username.";
+		if(!$user->ValidateUsername("qwertyuiop123456789003adfgsdfgsdfgdfghdghsdkjfhglkshfdglkjhsdflkghjlskdfghjlkjhfsdfgsdfgsdfgsdfgsdfgsdfgsdfg") instanceof ErrorMessage){
+			echo "ValidateUsername() returned true on invalid username qwertyuiop123456789003adfgsdfgsdfgdfghdghsdkjfhglkshfdglkjhsdflkghjlskdfghjlkjhfsdfgsdfgsdfgsdfgsdfgsdfgsdfg.";
 			return false;				
 		}
 		
 		//Invalid username
-		if($user->ValidateUsername("___") == true){
-			echo "ValidateUsername() returned true on invalid username.";
+		if(!$user->ValidateUsername("___") instanceof ErrorMessage){
+			echo "ValidateUsername() returned true on invalid username ___.";
 			return false;				
 		}
 		
 		//Invalid username
-		if($user->ValidateUsername("___sdfg") == true){
-			echo "ValidateUsername() returned true on invalid username.";
+		if(!$user->ValidateUsername("___sdfg") instanceof ErrorMessage){
+			echo "ValidateUsername() returned true on invalid username ___sdfg.";
 			return false;				
 		}
 		
 		//Invalid username
-		if($user->ValidateUsername("sdf___") == true){
-			echo "ValidateUsername() returned true on invalid username.";
+		if(!$user->ValidateUsername("sdf___") instanceof ErrorMessage){
+			echo "ValidateUsername() returned true on invalid username sdf___.";
 			return false;				
 		}
 		
 		//Invalid username
-		if($user->ValidateUsername("") == true){
-			echo "ValidateUsername() returned true on invalid username.";
+		if(!$user->ValidateUsername("") instanceof ErrorMessage){
+			echo "ValidateUsername() returned true on invalid username ''.";
 			return false;				
 		}
 		
 		//Valid password
-		if($user->ValidatePassword("Abcdefg1") == false){
+		if($user->ValidatePassword("Abcdefg1") instanceof ErrorMessage){
 			echo "ValidatePassword() returned false on valid password.<br />";
 			return false;
 		}
 		
 		//Valid password
-		if($user->ValidatePassword("kjhJhkj75!%€&") == false){
+		if($user->ValidatePassword("kjhJhkj75!%€&") instanceof ErrorMessage){
 			echo "ValidatePassword() returned false on valid password.<br />";
 			return false;
 		}
 		
 		//Invalid password
-		if($user->ValidatePassword("12345678") == true){
+		if(!$user->ValidatePassword("12345678") instanceof ErrorMessage){
 			echo "ValidatePassword() returned true on invalid password.<br />";
 			return false;
 		}
 		
 		//Invalid password
-		if($user->ValidatePassword("abc") == true){
+		if(!$user->ValidatePassword("abc") instanceof ErrorMessage){
 			echo "ValidatePassword() returned true on invalid password.<br />";
 			return false;
 		}

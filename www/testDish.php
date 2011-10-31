@@ -1,14 +1,24 @@
 <?php
 
+	require_once 'Controller/LoginController.php';
+	require_once 'Controller/MasterController.php';
+	require_once 'Controller/RegisterController.php';
+	
+	require_once 'Model/DAL/DB_settings.php';
 	require_once 'Model/DAL/DishDAL.php';
-	require_once 'Model/Dish.php';
-	require_once 'Model/User.php';
-	require_once 'Model/DishHandler.php';
-	require_once 'Controller/DishController.php';
+	require_once 'Model/DAL/LoginDAL.php';
 	require_once 'Model/Constants.php';
-	//require_once 'View/DishView.php';
+	require_once 'Model/Dish.php';
+	require_once 'Model/DishHandler.php';
+	require_once 'Model/ErrorMessage.php';
+	require_once 'Model/ErrorStrings.php';
+	require_once 'Model/LoginHandler.php';
+	require_once 'Model/RegisterHandler.php';
+	require_once 'Model/User.php';
 	require_once 'Model/Validator.php';
-
+	
+	require_once 'View/LoginView.php';
+	require_once 'View/RegisterView.php';
 
 
 	class TestDish{
@@ -18,39 +28,39 @@
 			$dish = new Dish();
 			$date = new DateTime();
 			
-			if($dish->ValidateDishName("Makaroner och köttbullar") == false){
+			if($dish->ValidateDishName("Makaroner och köttbullar") instanceof ErrorMessage){
 				echo "ValidateDishName returns false on valid dishname<br />";
 				return false;
 			}
 			
-			if($dish->ValidateDishName("Spaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssås") == true){
+			if(!$dish->ValidateDishName("Spaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssåsSpaghetti och köttfärssås") instanceof ErrorMessage){
 				echo "ValidateDishName returns true on too long dishname<br />";
 				return false;
 			}
 			
-			if($dish->ValidateDishName("Spa#€€ghetti och köttfärssås") == true){
+			if(!$dish->ValidateDishName("Spa#€€ghetti och köttfärssås") instanceof ErrorMessage){
 				echo "ValidateDishName returns true on dishname with special characters<br />";
 				return false;
 			}
 			
 			$dish->SetDishInfo("<p>hello world</p>");
 			
-			if($dish->GetDishInfo() !== "&lt;p&gt;hello world&lt;/p&gt;"){
-				echo "SetDishInfo does not encode special characters";
+			if($dish->GetDishInfo() !== "hello world"){
+				echo "SetDishInfo does not strip tags";
 				return false;
 			}
 			
-			if($dish->ValidateUrl("http://www.recept.nu/1.300846/anette_rosvall_och_emma_hamberg/huvudratter/fisk_skaldjur/hoki_med_aggsas") == false){
+			if($dish->ValidateUrl("http://www.recept.nu/1.300846/anette_rosvall_och_emma_hamberg/huvudratter/fisk_skaldjur/hoki_med_aggsas") instanceof ErrorMessage){
 				echo "ValidateUrl returns false on valid url";
 				return false;
 			}
 			
-			if($dish->ValidateUrl("http://www.tasteline.com/recept/Radjursfile_med_rotsakspytt_och_smorfrasta_kantareller") == false){
+			if($dish->ValidateUrl("http://www.tasteline.com/recept/Radjursfile_med_rotsakspytt_och_smorfrasta_kantareller") instanceof ErrorMessage){
 				echo "ValidateUrl returns false on valid url";
 				return false;
 			}
 			
-			if($dish->ValidateUrl("http:/www.tasteline.com/recept/Radjursfile_med_rotsakspytt_och_smorfrasta_kantareller") == true){
+			if(!$dish->ValidateUrl("http:/www.tasteline.com/recept/Radjursfile_med_rotsakspytt_och_smorfrasta_kantareller") instanceof ErrorMessage){
 				echo "ValidateUrl returns true on invalid url<br />";
 				return false;
 			}
@@ -75,12 +85,12 @@
 			}
 			
 			$dish = new Dish();
-			$dish->SetId(3);
+			$dish->SetId(94);
 			
 			$dish = $dishDAL->GetDish($dish);
 			
 			if($dish->GetDishName() != "Chili con carne"){
-				echo "GetDishName() could not return Chili con carne";
+				echo "DishNameExists could not return Chili con carne";
 				return false;
 			}
 			
@@ -116,11 +126,25 @@
 		}
 		
 		public function TestDishHandler(){
+			$dishHandler = new DishHandler();
 			
-		}
-		
-		public function TestDishView(){
+			$user = new User();
+			$user->SetUserId(2);
+			$user = $dishHandler->GetDishes($user);
 			
+			if(count($user->GetDishes()) == 0){
+				echo "GetDishes() does not get dishes.";
+				return false;
+			}
+			
+			$dish = $dishHandler->GetRandomDish($user);
+							
+			if(!$dish instanceof Dish){
+				echo "GetRandomDish() does not return dish object.";
+				return false;
+			}
+			
+			return true;	
 		}
 		
 		public function Test(){
@@ -149,14 +173,7 @@
 			else {
 				echo "DishHandler.php FAILED<br />";
 			}
-			
-			echo "<h1>DishView.php</h1>";
-			if($this->TestDishView() == true){
-				echo "DishView.php OK<br />";
-			}
-			else {
-				echo "DishView.php FAILED<br />";
-			}
+
 		}
 		
 	
