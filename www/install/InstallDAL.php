@@ -42,7 +42,7 @@
 			return $tables;
 		}
 		else{
-			throw new Exception("Database Error.", 1);
+			Log::LogError("Could not show tables.");
 		}
 	}
 	
@@ -52,14 +52,14 @@
 				$stmt->close();
 		}
 		else{
-			throw new Exception("Database Error.", 1);
+			Log::LogError("Could not add User table.");
 		}
 		if($stmt = $this->myConnection->prepare($this->createDish)){
 				$stmt->execute();
 				$stmt->close();
 		}
 		else{
-			throw new Exception("Database Error.", 1);
+			Log::LogError("Could not add Dish table.");
 		}
 		return true;
 	}
@@ -70,7 +70,7 @@
 				$stmt->close();
 		}
 		else{
-			throw new Exception("Database Error.", 1);
+			Log::LogError("Could not remove tables.");
 		}
 		return true;
 	}

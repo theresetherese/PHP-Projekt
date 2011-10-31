@@ -176,6 +176,7 @@
 				
 				$user->SetUsername($username);
 				$user->SetEmail($email);
+				$password = $user->HashPassword($password);
 				$user->SetPassword($password);
 				
 				return $user;
