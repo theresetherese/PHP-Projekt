@@ -1,0 +1,152 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*
+	GENERAL STYLES
+*/
+
+body {
+	font-size: 62.5%;
+	font-family: "Trebuchet MS", Helvetica, Tahoma, sans-serif;
+}
+
+#wrapper{
+	max-width: 900px;
+	min-width: 300px;
+	margin: 0 auto;
+	padding: 0;
+	margin-top:8em;
+}
+
+#welcome{
+	width:40%;
+	float:left;
+}
+
+#loginform{
+	width:40%;
+	float:right;
+}
+
+#logoutForm{
+	margin-bottom:10em;
+}
+
+#addDishForm{
+	margin-bottom:5em;
+}
+
+#randomDish{
+	margin-bottom:10em;
+}
+
+p, input, ul{
+	font-size: 1.6em;
+}
+
+p ul, ul p{
+	font-size: 1em;
+}
+
+p, h1, h2, h3, h4, h5, h6{
+	margin-bottom: 1em;
+	line-height: 1.5;
+}
+
+h1{
+	font-size: 4em;
+}
+
+h2{
+	font-size: 2.5em;
+}
+
+h3{
+	font-size:1.4em;
+}
+
+label{
+	display: block;
+}
+
+#keeploggedin{
+	display:inline;
+}
+
+legend{
+	font-size: 2em;
+}
+
+fieldset{
+	padding-top: 2em;
+	min-width: 300px;
+	max-width: 50%;
+}
+
+input, textarea {
+	padding:0.5em;
+}
+
+#keepLoggedIn{
+	width: auto;
+}
+
+li {
+	padding:1em;
+	margin-bottom:1em;
+	background: #e0e0e0;
+}
+
+em {
+	font-style:italic;
+}
+
+strong {
+	font-weight:bold;
+}

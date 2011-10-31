@@ -68,7 +68,6 @@
 			//Text + loginbox
 			$xhtml = $loginView->DoWelcomeText();
 			$xhtml .= $loginView->DoLoginBox();
-			$xhtml .= $loginView->DoRegisterLink();
 			
 			//Check if user tries to log in
 			if ($loginView->TriedToLogin() == true){
@@ -98,7 +97,6 @@
 						$xhtml = $loginView->DoWelcomeText();
 						$xhtml .= $loginView->DoErrorText($error);
 						$xhtml .= $loginView->DoLoginBox();
-						$xhtml .= $loginView->DoRegisterLink();
 					}
 				}
 				//Form isn't filled correctly
@@ -107,7 +105,6 @@
 					$xhtml = $loginView->DoWelcomeText();
 					$xhtml .= $loginView->DoErrorText($error);
 					$xhtml .= $loginView->DoLoginBox();
-					$xhtml .= $loginView->DoRegisterLink();
 				}
 				
 			}

@@ -43,11 +43,13 @@
 	<head>
     	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     	<title>Vad ska jag äta idag?</title>
+    	<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 
 	<body>
-		
+		<div id="wrapper">
 		<?php echo $body; ?>
+		</div>
 		
 	</body>
 </html>

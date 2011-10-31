@@ -3,7 +3,7 @@
 	class DishView{
 		
 		public function DoRandomDish(Dish $dish){
-			$xhtml = "<h2>";		
+			$xhtml = "<div id='randomDish'><h2>";		
 			$xhtml .= $dish->GetDishName();
 			$xhtml .= "</h2>";
 			if($dish->GetDishInfo() != ""){
@@ -14,19 +14,19 @@
 				
 			$dateAdded = new DateTime($dish->GetCreationDate());
 			
-			$xhtml .= '<p>Skapad: ';
+			$xhtml .= '<p><em>Skapad: ';
 			$xhtml .= $dateAdded->format('Y-m-d');
-			$xhtml .= '</p>';
+			$xhtml .= '</em></p>';
 
 			if($dish->GetUrl() != ""){
-				$xhtml .= '<p>';
+				$xhtml .= '<p class="visitUrl">';
 				$xhtml .= '<a href="';
 				$xhtml .= $dish->GetUrl();
 				$xhtml .= '" title="Besök maträttens länk">Besök länk</a>';
 				$xhtml .= '</p>';
 			}
 			
-			$xhtml .= "<a href='index.php' title='Klicka för att ladda om sidan och slumpa fram en annan maträtt'>Slumpa ny maträtt</a>";
+			$xhtml .= "<p class='newRandomDish'><a href='index.php' title='Klicka för att ladda om sidan och slumpa fram en annan maträtt'>Slumpa ny maträtt</a></p></div>";
 			
 			return $xhtml;
 		}
@@ -36,6 +36,7 @@
 		 */
 		public function DoAddDish(){
 			$xhtml = '
+			<div id="addDishForm">
 			<fieldset>
 			<legend>Lägg till ny maträtt</legend>
 				<form method="post">
@@ -56,6 +57,7 @@
 					</p>
 				</form>
 			</fieldset>
+			</div>
 			';
 			return $xhtml;
 		}
@@ -73,8 +75,9 @@
 			
 				foreach ($user->GetDishes() as $dish) {
 						
-					$xhtml .= '<li>';
+					$xhtml .= '<li><h3>';
 					$xhtml .= $dish->GetDishName();
+					$xhtml .= '</h3>';
 					
 					
 					if($dish->GetDishInfo() != ""){

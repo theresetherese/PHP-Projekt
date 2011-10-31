@@ -81,7 +81,7 @@
 		
 		//Return link to login
 		public function DoLoginLink(){
-			return "<a href='?' title='Logga in'>Logga in</a>";
+			return "<p><a href='?' title='Logga in'>Logga in</a></p>";
 		}
 		
 		//Error text

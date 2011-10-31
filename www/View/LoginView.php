@@ -20,14 +20,14 @@
 		
 		//Return welcome-text
 		public function DoWelcomeText() {
-			return "<h1>Vad ska jag äta idag?</h1>
-			<p>Svårt att bestämma vad du ska äta? Registrera dig för att spara maträtter du gillar, och slumpa fram dem när fantasin tagit slut!</p>";
+			return "<div id='welcome'><h1>Vad ska jag äta idag?</h1>
+			<h2>Svårt att bestämma vad du ska äta? <a href='?" . Constants::RegisterGetKey . "=" . Constants::RegisterGetValue . "'>Registrera dig</a> för att spara maträtter du gillar, och slumpa fram dem när fantasin tagit slut!</h2></div>";
 		}
 		
 		//Return login form
 		public function DoLoginBox(){
 			//Start login form	
-			$form = "<form method='post'>
+			$form = "<div id='loginform'><form method='post'>
 				<fieldset>
 					<legend>Logga in</legend>
 					<p>
@@ -39,14 +39,14 @@
 						<input type='password' id='password' name='password' required='required' />
 					</p>
 					<p>
-						<label for='keepLoggedIn'>Kom ihåg mig</label>
+						<label for='keepLoggedIn' id='keeploggedin'>Kom ihåg mig</label>
 						<input type='checkbox' id='" . Constants::KeepMeLoggedInPostKey . "' name='" . Constants::KeepMeLoggedInPostKey . "' value='" . Constants::KeepMeLoggedInPostValue . "' />
 					</p>
 					<p>
 						<input type='submit' id='loginButton' name='" . Constants::LoginPostKey . "' value='" . Constants::LoginPostValue . "' />
 					</p>
 				</fieldset>
-			</form>";
+			</form></div>";
 			
 			//Return form
 			return $form;
@@ -55,11 +55,11 @@
 		
 		//Return logout form
 		public function DoLogoutBox(){
-			return "<form method='post' action='index.php'>
+			return "<div id='logoutForm'><form method='post' action='index.php'>
 				<p>
 					<input type='submit' id='" . Constants::LogoutPostKey . "' name='" . Constants::LogoutPostKey . "' value='" . Constants::LogoutPostValue . "' />
 				</p>
-			</form>";
+			</form></div>";
 		}
 		
 		//Return text for logged in users
