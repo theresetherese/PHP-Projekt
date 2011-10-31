@@ -41,7 +41,7 @@
 				
 			}
 			else{
-				//TODO Logga fel					
+				Log::LogError("Could not get dishes from user.");				
 			}
 			
 		}
@@ -68,7 +68,7 @@
 				return $dish;
 			}
 			else{
-				//TODO Logga fel					
+				Log::LogError("Could not get dish from user.");					
 			}
 		}
 		
@@ -99,7 +99,7 @@
 				
 			}
 			else{
-				//TODO Logga fel
+				Log::LogError("Could not check for existing dishname.");
 					
 			}
 		}
@@ -133,7 +133,7 @@
 							
 			}
 			else{
-				throw new Exception("Database Error.", 1);		
+				Log::LogError("Could not add dish.");		
 			}
 			
 		}
@@ -161,7 +161,7 @@
 				}
 			}
 			else{
-				throw new Exception("Database Error.", 1);
+				Log::LogError("Could not delete dish.");
 					
 			}
 		}
@@ -174,7 +174,7 @@
 			
 			/* check connection */
 			if (mysqli_connect_errno()) {
-				printf("Connect failed: %s\n", mysqli_connect_error());
+				Log::LogError("Connect failed: %s\n", mysqli_connect_error());
 				exit();
 			}
 		}

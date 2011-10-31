@@ -45,7 +45,7 @@
 				
 			}
 			else{
-				throw new Exception("Database Error.", 1);
+				Log::LogError("Could not get user by name.");
 					
 			}
 			
@@ -81,7 +81,7 @@
 				
 			}
 			else{
-				throw new Exception("Database Error.", 1);
+				Log::LogError("Could not get user by id.");
 					
 			}
 			
@@ -127,7 +127,7 @@
 				
 			}
 			else{
-				throw new Exception("Database Error.", 1);
+				Log::LogError("Could not compare passwords.");
 					
 			}
 			
@@ -173,7 +173,7 @@
 				
 			}
 			else{
-				throw new Exception("Database Error.", 1);
+				Log::LogError("Could not compare cookies.");
 					
 			}
 			
@@ -212,7 +212,7 @@
 				}
 			}
 			else{
-				throw new Exception("Database Error.", 1);
+				Log::LogError("Could not add user.");
 					
 			}
 			
@@ -240,7 +240,7 @@
 				return true;
 			}
 			else{
-				throw new Exception("Database Error.", 1);
+				Log::LogError("Could not delete user.");
 					
 			}
 			
@@ -262,7 +262,7 @@
 				return true;
 			}
 			else{
-				throw new Exception("Database Error.", 1);
+				Log::LogError("Could not update cookie and ip in database.");
 					
 			}
 			
@@ -277,7 +277,7 @@
 			
 			/* check connection */
 			if (mysqli_connect_errno()) {
-				printf("Connect failed: %s\n", mysqli_connect_error());
+				Log::LogError("Connect failed: %s\n", mysqli_connect_error());
 				exit();
 			}
 		}
