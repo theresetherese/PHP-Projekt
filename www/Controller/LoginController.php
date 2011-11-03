@@ -129,9 +129,6 @@
 			
 			$xhtml = $loginView->DoLoggedInText($user);
 			
-			//Logout-box
-			$xhtml .= $loginView->DoLogoutBox();
-			
 			//Check if user tries to log out
 			if($loginView->TriedToLogout() == true){
 				

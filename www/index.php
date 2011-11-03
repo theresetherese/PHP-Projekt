@@ -47,9 +47,7 @@
 	</head>
 
 	<body>
-		<div id="wrapper">
 		<?php echo $body; ?>
-		</div>
-		
+		</div>		
 	</body>
 </html>

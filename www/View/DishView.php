@@ -3,9 +3,9 @@
 	class DishView{
 		
 		public function DoRandomDish(Dish $dish){
-			$xhtml = "<div id='randomDish'><h2>";		
+			$xhtml = "<div id='randomDish'><h2>Vad ska jag äta idag?</h2><h3>";		
 			$xhtml .= $dish->GetDishName();
-			$xhtml .= "</h2>";
+			$xhtml .= "!</h3>";
 			if($dish->GetDishInfo() != ""){
 				$xhtml .= '<p>';
 				$xhtml .= $dish->GetDishInfo();
@@ -35,6 +35,22 @@
 		 * Form to add dish 
 		 */
 		public function DoAddDish(){
+			$dishname = "";
+			$dishurl = "";
+			$dishinfo = "";
+				
+			if($this->GetDishName() != false){
+				$dishname = $this->GetDishName();
+			}
+			
+			if($this->GetDishUrl() != false){
+				$dishurl = $this->GetDishUrl();
+			}	
+			
+			if($this->GetDishInfo() != false){
+				$dishinfo = $this->GetDishInfo();
+			}
+				
 			$xhtml = '
 			<div id="addDishForm">
 			<fieldset>
@@ -42,15 +58,15 @@
 				<form method="post">
 					<p>
 						<label for="dishname">Namn:</label>
-						<input type="text" name="dishname" id="dishname" />
+						<input type="text" name="dishname" id="dishname" value="' . $dishname . '" />
 					</p>
 					<p>
 						<label for="dishurl">Länk:</label>
-						<input type="text" name="dishurl" id="dishurl" />
+						<input type="text" name="dishurl" id="dishurl" value="' . $dishurl . '" />
 					</p>
 					<p>
 						<label for="dishinfo">Information:</label>
-						<textarea name="dishinfo" id="dishinfo"></textarea>
+						<textarea name="dishinfo" id="dishinfo">' . $dishinfo . '</textarea>
 					</p>
 					<p>
 						<input type="submit" id="' . Constants::DishViewPostKey . '" name="' . Constants::DishViewPostKey . '" value="' . Constants::DishViewAddPostValue . '" />
@@ -67,7 +83,7 @@
 		 */
 		
 		public function DoAllDishes(User $user){
-			$xhtml = '<h2>Alla sparade maträtter</h2>';	
+			$xhtml = '<div id="allDishes"><h2>Alla sparade maträtter</h2>';	
 				
 			if(count($user->GetDishes()) > 0){
 			
@@ -102,7 +118,7 @@
 					
 				}
 				$xhtml .= '</li>';
-				$xhtml .= '</ul>';
+				$xhtml .= '</ul></div>';
 			}
 
 			//If no dishes exist
@@ -115,7 +131,7 @@
 		}
 		
 		public function DoAddedDishText(){
-			$xhtml = "<p>Maträtten har lagts till i listan!</p>";
+			$xhtml = "<p class='success'>Maträtten har lagts till i listan!</p>";
 			return $xhtml;
 		}
 		

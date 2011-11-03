@@ -48,7 +48,7 @@
 		public function DoRegisterBox(){
 			$validator = new Validator();
 			//Start registration form	
-			$form = "<h1>Registrera användare</h1><form method='post'>
+			$form = "<div id='registerform'><h1>Registrera användare</h1><form method='post'>
 				<p>
 					<label for='username'>Användarnamn: </label>
 					<input type='text' id='username' name='username' />
@@ -68,7 +68,7 @@
 				<p>
 					<input type='submit' id='registerButton' name='" . Constants::RegisterPostKey . "' value='" . Constants::RegisterPostValue . "' />
 				</p>
-			</form>";
+			</form></div>";
 			
 			//Return form
 			return $form;

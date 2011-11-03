@@ -58,23 +58,27 @@
 					if($dishHandler->DishNameExists($dish, $user) == false){
 						//Add dish	
 						if($dishHandler->AddDish($dish, $user) != false){
-							$xhtml .= $dishView->DoAddedDishText();
+							$xhtml = $dishView->DoAddedDishText();
+							$xhtml .= $dishView->DoAddDish();
 						}
 						//Print error message if AddDish() fails
 						else{
 							$error = new ErrorMessage(ErrorStrings::CouldNotAddDish);
-							$xhtml .= $dishView->DoErrorText($error);
+							$xhtml = $dishView->DoErrorText($error);
+							$xhtml .= $dishView->DoAddDish();
 						}
 					}
 					//Dish already exists
 					else{
 						$error = new ErrorMessage(ErrorStrings::DishExists);
-						$xhtml .= $dishView->DoErrorText($error);
+						$xhtml = $dishView->DoErrorText($error);
+						$xhtml .= $dishView->DoAddDish();
 					}
 				}
 				//User input was invalid
 				else{
-					$xhtml .= $dishView->DoErrorText($dish);
+					$xhtml = $dishView->DoErrorText($dish);
+					$xhtml .= $dishView->DoAddDish();
 				}				
 			}
 			

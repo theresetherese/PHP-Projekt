@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Serif+Caption:400,400italic|PT+Sans:400,400italic,700,700italic);
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -53,62 +55,194 @@ table {
 
 body {
 	font-size: 62.5%;
-	font-family: "Trebuchet MS", Helvetica, Tahoma, sans-serif;
+	font-family: "PT Sans", Helvetica, Tahoma, sans-serif;
+	background:url('img/bg.jpg');
+	background-size: cover;
+	background-attachment:fixed;
+	background-position:top center;
+	background-repeat: no-repeat;
+	background-color: #EEE;
 }
 
 #wrapper{
-	max-width: 900px;
-	min-width: 300px;
+	max-width: 1300px;
+	min-width: 900px;
 	margin: 0 auto;
-	padding: 0;
-	margin-top:8em;
+	background:#FEFFF7;
+	padding:5em 3em;
+	margin-bottom:8em;
+	box-shadow:0 0 45px 10px #000;
+}
+
+#welcome, #loginform, #registerform{
+	margin:0 auto;
+	width:500px;
+	margin-top:5em;	
 }
 
 #welcome{
-	width:40%;
-	float:left;
+	color:#fff;
 }
 
-#loginform{
-	width:40%;
+
+#topContainer{
+	background:#000;
+	padding:0.5em 0;
+}
+
+#topContainer:after, #wrapper:after{
+	content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+#topContent{
+	max-width: 1300px;
+	min-width:900px;
+	margin:0 auto;
+	color:#fff;
+}
+
+#logoutBox {
 	float:right;
 }
 
-#logoutForm{
-	margin-bottom:10em;
-}
 
 #addDishForm{
 	margin-bottom:5em;
+	float:left;
+	width:20%;
 }
 
 #randomDish{
 	margin-bottom:10em;
+	float:right;
+	width:69%;
 }
 
-p, input, ul{
-	font-size: 1.6em;
+#allDishes{
+	float:right;
+	width:70%;
 }
 
-p ul, ul p{
-	font-size: 1em;
+
+
+
+
+
+/*
+ 	TEXT AND LIST FORMATTING
+ */
+p{
+	font-size: 1.8em;
 }
 
-p, h1, h2, h3, h4, h5, h6{
-	margin-bottom: 1em;
-	line-height: 1.5;
+p, h1, h2, h3, h4, h5, h6, input, label, textarea{
+	margin-bottom: 0.5em;
+}
+
+#topContent p{
+	display:inline;
+}
+
+#welcome p{
+	font-size: 3em;
+	text-shadow:2px 2px 2px #000;
+}
+
+p.success{
+	border:1px solid #2F8C15;
+	padding: 1em;
+	margin-bottom: 3em;
+	background:#D8F5D0;
+}
+
+p.errorMessage{
+	border:1px solid #E8797C;
+	padding: 1em;
+	margin-bottom: 3em;
+	background:#F2D3D4;
 }
 
 h1{
-	font-size: 4em;
+	font-size: 5em;
+	font-family: "PT Serif", Georgia, serif;
 }
 
-h2{
-	font-size: 2.5em;
+#topContent h1{
+	font-size:2em;
+	color:#fff;
+	float:left;
+}
+
+h2, legend{
+	font-size: 3.4em;
+	font-family: "PT Serif", Georgia, serif;
+}
+
+#allDishes h2{
+
 }
 
 h3{
-	font-size:1.4em;
+	font-size:2.5em;
+	font-family: "PT Serif", Georgia, serif;
+}
+
+h4{
+	font-size:2em;
+	font-family:"PT Serif", Georgia, serif;
+}
+
+h5{
+	font-size:1.6em;
+	font-family:"PT Serif", Georgia, serif;
+}
+
+
+li {
+	padding:1em;
+	margin-bottom:1em;
+}
+
+em {
+	font-style:italic;
+}
+
+strong {
+	font-weight:bold;
+}
+
+.floatLeft{
+	float:left;
+}
+
+.floatRight{
+	float:right;
+}
+
+/*
+ 	FORMS
+ */
+input, textarea{
+	font-size:1.2em;
+}
+
+#wrapper input, #wrapper textarea{
+	border:1px solid #D8DBC1;
+}
+
+textarea{
+	height:10em;
+}	
+	
+input#username, input#password, input#dishname, input#dishurl, textarea, input#email, input#confirmPassword{
+	width:94%;
+}
+
+#topContent form{
+	display:inline;
 }
 
 label{
@@ -120,13 +254,8 @@ label{
 }
 
 legend{
-	font-size: 2em;
-}
-
-fieldset{
-	padding-top: 2em;
-	min-width: 300px;
-	max-width: 50%;
+	font-size: 2.4em;
+	margin-bottom:1em;
 }
 
 input, textarea {
@@ -135,18 +264,4 @@ input, textarea {
 
 #keepLoggedIn{
 	width: auto;
-}
-
-li {
-	padding:1em;
-	margin-bottom:1em;
-	background: #e0e0e0;
-}
-
-em {
-	font-style:italic;
-}
-
-strong {
-	font-weight:bold;
 }

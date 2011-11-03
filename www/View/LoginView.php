@@ -21,7 +21,7 @@
 		//Return welcome-text
 		public function DoWelcomeText() {
 			return "<div id='welcome'><h1>Vad ska jag äta idag?</h1>
-			<h2>Svårt att bestämma vad du ska äta? <a href='?" . Constants::RegisterGetKey . "=" . Constants::RegisterGetValue . "'>Registrera dig</a> för att spara maträtter du gillar, och slumpa fram dem när fantasin tagit slut!</h2></div>";
+			<p><a href='?" . Constants::RegisterGetKey . "=" . Constants::RegisterGetValue . "'>Registrera dig</a> för att spara maträtter du gillar, och slumpa fram dem när fantasin tagit slut!</p></div>";
 		}
 		
 		//Return login form
@@ -38,11 +38,11 @@
 						<label for='password'>Lösenord: </label>		
 						<input type='password' id='password' name='password' required='required' />
 					</p>
-					<p>
+					<p class='floatLeft'>
 						<label for='keepLoggedIn' id='keeploggedin'>Kom ihåg mig</label>
 						<input type='checkbox' id='" . Constants::KeepMeLoggedInPostKey . "' name='" . Constants::KeepMeLoggedInPostKey . "' value='" . Constants::KeepMeLoggedInPostValue . "' />
 					</p>
-					<p>
+					<p class='floatRight'>
 						<input type='submit' id='loginButton' name='" . Constants::LoginPostKey . "' value='" . Constants::LoginPostValue . "' />
 					</p>
 				</fieldset>
@@ -55,16 +55,14 @@
 		
 		//Return logout form
 		public function DoLogoutBox(){
-			return "<div id='logoutForm'><form method='post' action='index.php'>
-				<p>
+			return "<form method='post' action='index.php'>
 					<input type='submit' id='" . Constants::LogoutPostKey . "' name='" . Constants::LogoutPostKey . "' value='" . Constants::LogoutPostValue . "' />
-				</p>
-			</form></div>";
+			</form>";
 		}
 		
 		//Return text for logged in users
 		public function DoLoggedInText(User $user){
-			return "<h1>Vad ska jag äta idag?</h1><p>Hej, " . $user->GetUsername() . "</p>";
+			return "<div id='topContainer'><div id='topContent'><h1>Vadskajagätaidag.se</h1><div id='logoutBox'><p>Hej, " . $user->GetUsername() . "</p> " . $this->DoLogoutBox() . "</div></div></div><div id='wrapper'>";
 		}
 		
 		//Return link to registration
